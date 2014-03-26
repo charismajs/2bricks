@@ -11,6 +11,8 @@ TO DO
  * Install Node.js
  * Designated executing API ( sqoop, hive )
 * View pages to display logs for executed commamds (Angular.js)
+* Excution job history
+*
  
 
 
