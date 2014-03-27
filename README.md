@@ -11,8 +11,9 @@ TO DO
  * Install Node.js
  * Designated executing API ( sqoop, hive )
 * View pages to display logs for executed commamds (Angular.js)
+ * View for Modifing a Hive command
+ * Output page with log
 * Excution job history
-*
  
 
 
