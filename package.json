@@ -1,0 +1,25 @@
+{
+  "name": "2bricks",
+  "version": "0.0.0",
+  "description": "Web interface to operate simple tasks in Hadoop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FTDT/2bricks"
+  },
+  "keywords": [
+    "shell",
+    "hadoop",
+    "hive",
+    "sqoop"
+  ],
+  "author": "you",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FTDT/2bricks/issues"
+  },
+  "homepage": "https://github.com/FTDT/2bricks"
+}
