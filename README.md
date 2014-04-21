@@ -1,7 +1,7 @@
 2bricks
 =======
 
-Weird bricks but, they with beautiful 998 bricks... for Hadoop  
+Weird bricks but, they are always with beautiful 998 bricks... for Hadoop  
 
 
 TO DO
