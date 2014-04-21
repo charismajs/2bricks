@@ -1,0 +1,19 @@
+{
+  "name": "2bricks",
+  "version": "0.0.0",
+  "homepage": "https://github.com/FTDT/2bricks",
+  "description": "Don't make me annoy, Don't ask!!!",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "bootstrap": "~3.1.1"
+  }
+}
