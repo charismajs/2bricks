@@ -7,11 +7,8 @@ var mongoose = require('mongoose'),
 
 // TODO
 // CRUD
-exports.createJob = function(req, res) {
+exports.createJob = function(req, res, next) {
     var jobData = req.body;
-    console.log("Body Part:" + req.body);
-    console.log("Body name:" + req.body.toString());
-    console.log("Body name:" + req.body.length);
 
     Job.create(jobData, function(err, job) {
         if (err) {
@@ -29,7 +26,7 @@ exports.createJob = function(req, res) {
     })
 }
 
-exports.getJob = function(req, res) {
+exports.getJob = function(req, res, next) {
     var id = req.param('id');
 
     Job.findOne({name: req.params.name}).exec( function (err, job) {
