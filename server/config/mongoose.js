@@ -1,5 +1,7 @@
 var mongoose = require('mongoose'),
-    jobModel = require('../model/Job');
+    jobModel = require('../model/Job'),
+    taskModel = require('../model/Task'),
+    executionModel = require('../model/Execution');
 
 module.exports = function(config) {
     mongoose.connect(config.db);
@@ -11,3 +13,5 @@ module.exports = function(config) {
 }
 
 jobModel.createDefaultJob();
+taskModel.createDefault();
+executionModel.createDefault();

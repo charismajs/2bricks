@@ -5,9 +5,9 @@
 var mongoose = require('mongoose'),
     Job = mongoose.model('Job');
 
-// TODO
-// CRUD
-exports.createJob = function(req, res, next) {
+
+
+exports.create = function(req, res, next) {
     var jobData = req.body;
 
     Job.create(jobData, function(err, job) {
@@ -26,9 +26,16 @@ exports.createJob = function(req, res, next) {
     })
 }
 
-exports.getJob = function(req, res, next) {
-    var id = req.param('id');
+exports.getList = function(req, res, next) {
+    Job.find(function (err, joblist) {
+        if (err)
+            res.send(err);
 
+        res.json(joblist);
+    })
+}
+
+exports.get = function(req, res, next) {
     Job.findOne({name: req.params.name}).exec( function (err, job) {
         if (job == null) {
             res.status(404).json({status:'Not found job.'});
@@ -36,3 +43,38 @@ exports.getJob = function(req, res, next) {
         res.json(job);
     });
 }
+
+exports.update = function(req, res, next) {
+    var newJob = req.body;
+
+    Job.findOne({name: req.params.name}).exec( function(err, job) {
+        if (err)
+            res.send(err);
+
+        job.command = newJob.command;
+        job.arguments = newJob.arguments;
+        job.files = newJob.files;
+        job.comments = newJob.comments;
+        job.createdDate = new Date();
+
+        job.save(function(err) {
+            if (err)
+                res.send(err);
+
+            res.json({status: 'update', data: job});
+        });
+    });
+};
+
+exports.delete = function(req, res, next) {
+    Job.remove({name:req.params.name}, function(err, job) {
+
+        if (err)
+            res.send(err);
+
+        res.json({status: 'deleted', data: req.params.name});
+    });
+}
+
+
+
