@@ -2,14 +2,18 @@
 var express = require('express'),
 	morgan = require('morgan'),
 	methodOverride = require('method-override'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
     bodyParser = require('body-parser');
 
 var app = express();
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-app.use(morgan('dev'))
+app.use(morgan('dev'));
 app.use(bodyParser());
 app.use(methodOverride());
+app.use(cookieParser());
+app.use(session({secret: 'multi vision unicorns'}));
 
 var config = require('./server/config/config')[env];
 require('./server/config/express')( app, config);
