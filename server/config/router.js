@@ -26,7 +26,7 @@ module.exports = function(express){
         .get(jobController.getList);
 
     router.route('/jobs/:name')
-        .get(jobController.get)
+        .get(jobController.getOverHttp)
         .put(jobController.update)
         .delete(jobController.delete);
 
@@ -36,7 +36,7 @@ module.exports = function(express){
         .get(taskController.getList);
 
     router.route('/tasks/:name')
-        .get(taskController.get);
+        .get(taskController.getOverHttp);
 
     // EXECUTION CRUD
     router.route('/executions')
@@ -44,7 +44,7 @@ module.exports = function(express){
         .get(exeController.getList);
 
     router.route('/executions/:id')
-        .get(exeController.get);
+        .get(exeController.getOverHttp);
 
 
 

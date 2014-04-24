@@ -3,7 +3,13 @@
  */
 
 module.exports = function(model) {
-    return {
+    var getFn = function (id, next) {
+        model.findOne({_id: id}).exec(function (err, data) {
+            next(data);
+        });
+    };
+
+    var result = {
         create: function (req, res, next) {
             var data = req.body;
 
@@ -25,16 +31,19 @@ module.exports = function(model) {
             })
         },
 
-        get : function (req, res, next) {
-            var id = req.params.name;
-            model.findOne({name: id}).exec(function (err, data) {
+        get : getFn,
 
+        getOverHttp : function (req, res, next) {
+            var id = req.params.name;
+            getFn(id, function(data) {
                 if (data == null) {
                     res.status(404).json({status: 'Not found - ' + id});
                 }
-
                 res.json(data);
             });
         }
+
     }
-}
+
+    return result;
+};
