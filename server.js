@@ -13,7 +13,7 @@ app.use(morgan('dev'));
 app.use(bodyParser());
 app.use(methodOverride());
 app.use(cookieParser());
-app.use(session({secret: 'multi vision unicorns'}));
+app.use(session({secret: '2 bricks unicorns'}));
 
 var config = require('./server/config/config')[env];
 require('./server/config/express')( app, config);

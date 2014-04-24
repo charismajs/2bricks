@@ -1,7 +1,7 @@
 /**
  * Created by kp on 21/04/2014.
  */
-var jobController = require('../controller/jobcontroller');
+var jobController = require('../controller/jobController');
 var mongoose = require('mongoose');
 
 module.exports = function(express){
