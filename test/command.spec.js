@@ -4,7 +4,7 @@ var should = require('chai').should();
 var Executor = require('../server/controller/ExecuteController');
 
 describe('Command', function() {
-    var url = 'http://localhost:3030';
+    //var url = 'http://localhost:3030';
     it ('should return ls command', function(done) {
         var expected = "ls -l";
 
@@ -16,7 +16,9 @@ describe('Command', function() {
         done();
     });
 
+    /*
     it('should return replaced command', function(done) {
         var expected = ""
     })
+    */
 });

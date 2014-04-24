@@ -35,7 +35,7 @@ module.exports = function(express){
         .post(taskController.create)
         .get(taskController.getList);
 
-    router.route('/tasks/:name')
+    router.route('/tasks/:id')
         .get(taskController.getOverHttp);
 
     // EXECUTION CRUD

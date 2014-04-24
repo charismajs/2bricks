@@ -14,7 +14,7 @@ var Job = mongoose.model('Job', JobSchema);
 exports.createDefaultJob = function() {
     Job.find({}).exec(function(err, collection) {
         if (collection.length === 0) {
-            Job.create({name:'ls', command:'ls -l', arguments:'', files:'', comments:'file list up', createDate:new Date()})
+            Job.create({name:'ls', command:'ls -l', arguments:'', files:'', comments:'file list up', createdDate:new Date()})
         }
     })
 };

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var request = require('supertest');
 var should = require('chai').should();
 
-describe('Routing', function() {
+describe('JobController', function() {
     var url = 'http://localhost:3030';
     it('should return error trying to save duplicate job', function(done) {
         var job = {
