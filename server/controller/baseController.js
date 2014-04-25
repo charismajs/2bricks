@@ -42,8 +42,7 @@ module.exports = function(model) {
                 res.json(data);
             });
         }
-
-    }
+    };
 
     return result;
 };
