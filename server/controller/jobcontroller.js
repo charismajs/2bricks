@@ -6,7 +6,6 @@ var mongoose = require('mongoose'),
     Job = mongoose.model('Job');
 
 
-
 exports.create = function(req, res, next) {
     var jobData = req.body;
 
@@ -35,17 +34,11 @@ exports.getList = function(req, res, next) {
     })
 }
 
-exports.get = function(req, res, next) {
-    Job.findOne({name: req.params.name}).exec( function (err, job) {
-        if (job == null) {
-            res.status(404).json({status:'Not found job.'});
-        }
-        res.json(job);
-    });
-}
-
 exports.update = function(req, res, next) {
     var newJob = req.body;
+
+    console.log("Name : " + req.params.name);
+    console.log(newJob.name);
 
     Job.findOne({name: req.params.name}).exec( function(err, job) {
         if (err)
@@ -66,6 +59,23 @@ exports.update = function(req, res, next) {
     });
 };
 
+exports.getOverHttp = function(req, res, next) {
+    get(req.params.name, function(job) {
+        if (job == null) {
+            res.status(404).json({status:'Not found job.'});
+        }
+        res.json(job);
+    })
+};
+
+exports.get = this.get;
+
+var get = function(jobId, next) {
+    Job.findOne({name: jobId}).exec( function (err, job) {
+        next(job);
+    });
+};
+
 exports.delete = function(req, res, next) {
     Job.remove({name:req.params.name}, function(err, job) {
 
@@ -74,7 +84,7 @@ exports.delete = function(req, res, next) {
 
         res.json({status: 'deleted', data: req.params.name});
     });
-}
+};
 
 
 

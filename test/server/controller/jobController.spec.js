@@ -25,7 +25,8 @@ describe('JobController', function() {
     it('should return new inserted job', function(done) {
         var job = {
             name:'test', command:'test'
-        }
+        };
+
         request(url)
             .delete('/jobs' + '/' + job.name)
             .expect(200)
