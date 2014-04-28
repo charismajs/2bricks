@@ -1,7 +1,6 @@
-var mongoose = require('mongoose');
-var request = require('supertest');
-var should = require('chai').should();
-var executor = require('../server/controller/executeController');
+var app = require('./helper/app.js'),
+    mongoose = require('mongoose'),
+    exeCtrl = require('../server/controller/executeController');
 
 describe('Command', function() {
     var url = 'http://localhost:3030';
@@ -9,7 +8,7 @@ describe('Command', function() {
         var expected = "ls -l";
 
         var taskId = "53562e5ead5fe400004ba6e7";
-        executor.getCommand(taskId, function(result) {
+        exeCtrl.getCommand(taskId, function(result) {
             result.should.equal(expected);
         });
 
@@ -20,7 +19,7 @@ describe('Command', function() {
         var expected = "ls -ale TestFolder"
 
         var taskId = "53562d198d021f7cabb49f97";
-        executor.getCommand(taskId, function(result) {
+        exeCtrl.getCommand(taskId, function(result) {
             result.should.equal(expected);
         });
 
@@ -49,7 +48,7 @@ describe('Command', function() {
             ]
         }
 
-        executor.replace(job, task).should.equal(expected);
+        exeCtrl.replace(job, task).should.equal(expected);
         done();
     });
 
@@ -57,8 +56,48 @@ describe('Command', function() {
         var expected = 'HELLO WORLD\n';
         var command = 'echo "HELLO WORLD"';
 
-        executor.run(command, function(stdout) {
+        exeCtrl.run(command, function(stdout) {
             stdout.should.equal(expected);
+        });
+
+        done();
+    });
+
+    it('should return a instance of Execution', function(done) {
+        var Exe = mongoose.model('Execution');
+
+        Exe.create('ls -al', 'ls', function(exe) {
+            exe.status.should.equal('begin');
+            exe.should.have.property('start');
+            exe.should.not.have.property('log');
+            exe.should.not.have.property('error');
+        });
+
+        done();
+    });
+
+    it('should return a successed execution', function(done) {
+        var Exe = mongoose.model('Execution');
+        var execution = new Exe();
+
+        execution.success('log', function(exe) {
+
+            exe.status.should.equal('success');
+            exe.log.should.equal('log');
+
+        });
+
+        done();
+    });
+
+    it('should return a failed execution', function(done) {
+        var Exe = mongoose.model('Execution');
+        var execution = new Exe();
+
+        execution.failed('', 'Permission Denied', function(exe) {
+            exe.status.should.equal('failed');
+            exe.log.should.equal('');
+            exe.error.should.equal('Permission Denied');
         });
 
         done();

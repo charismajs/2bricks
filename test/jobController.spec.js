@@ -1,6 +1,5 @@
-var mongoose = require('mongoose');
+var app = require('./helper/app.js');
 var request = require('supertest');
-var should = require('chai').should();
 
 describe('JobController', function() {
     var url = 'http://localhost:3030';

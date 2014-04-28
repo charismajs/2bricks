@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
-    jobModel = require('../model/Job'),
-    taskModel = require('../model/Task'),
-    executionModel = require('../model/Execution');
+    job = require('../model/Job'),
+    task = require('../model/Task'),
+    execution = require('../model/Execution');
 
 module.exports = function(config) {
     mongoose.connect(config.db);
@@ -12,6 +12,21 @@ module.exports = function(config) {
     });
 }
 
-jobModel.createDefaultJob();
-taskModel.createDefault();
-executionModel.createDefault();
+var jobModel = mongoose.model('Job', job.Schema);
+var taskModel = mongoose.model('Task', task.Schema);
+var executionModel = mongoose.model('Execution', execution.Schema);
+
+createDefault(jobModel, job.defaultValues);
+createDefault(taskModel, task.defaultValues);
+createDefault(executionModel, execution.defaultValues);
+
+function createDefault(model, defaults) {
+    model.find({}).exec(function(err, collection) {
+        if (collection.length === 0) {
+            for( var i in defaults) {
+                (new model(defaults[i])).save();
+            }
+        }
+    });
+};
+

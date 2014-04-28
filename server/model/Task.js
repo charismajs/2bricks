@@ -7,25 +7,19 @@ var TaskSchema = mongoose.Schema({
     creator : String
 });
 
-var Task = mongoose.model('Task', TaskSchema);
+exports.Schema = TaskSchema;
+exports.defaultValues = [
+    {
+        jobId:'ls',
+        arguments:[],
+        createDate:new Date(),
+        creator:"It's me."
+    },
+    {
+        jobId:'cat',
+        arguments:[],
+        createDate:new Date(),
+        creator:"It's me."
+    }
+];
 
-exports.createDefault = function() {
-    Task.find({}).exec(function(err, collection) {
-        if (collection.length === 0) {
-            Task.create(
-                {
-                    jobId:'ls',
-                    arguments:[],
-                    createDate:new Date(),
-                    creator:"It's me."
-                });
-            Task.create(
-                {
-                    jobId:'cat',
-                    arguments:[],
-                    createDate:new Date(),
-                    creator:"It's me."
-                });
-        }
-    })
-};

@@ -9,12 +9,14 @@ var JobSchema = mongoose.Schema({
     createdDate : Date
 });
 
-var Job = mongoose.model('Job', JobSchema);
-
-exports.createDefaultJob = function() {
-    Job.find({}).exec(function(err, collection) {
-        if (collection.length === 0) {
-            Job.create({name:'ls', command:'ls -l', arguments:'', files:'', comments:'file list up', createdDate:new Date()})
-        }
-    })
-};
+exports.Schema = JobSchema;
+exports.defaultValues = [
+    {
+        name:'ls',
+        command:'ls -l',
+        arguments:'',
+        files:'',
+        comments:'file list up',
+        createdDate:new Date()
+    }
+];

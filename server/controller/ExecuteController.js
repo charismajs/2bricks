@@ -2,8 +2,6 @@ var sys = require('sys'),
     exec = require('child_process').exec;
 
 var mongoose = require('mongoose'),
-    jobModel = require('../model/Job'),
-    taskModel = require('../model/Task'),
     Task = mongoose.model('Task');
 
 var replace = function(job, task) {
@@ -37,13 +35,26 @@ exports.getCommand = function(taskId, next) {
     });
 };
 
+//var create = function(exeData) {
+//    executionModel.create(exeData, function(err, exe) {
+//        if (err) {
+//            console.log(err);
+//        }
+//        return exe;
+//    })
+//};
+
 exports.run = function(cmd, next) {
+
+
     child = exec( cmd, function(error, stdout, stderr) {
 //        sys.print('stdout: ' + stdout);
 //        sys.print('stderr: ' + stderr);
         if (error !== null) {
             console.log('exec error: ' + error);
+//            execution.failed(stdout, error);
         }
+//        execution.success(stdout);
         return next(stdout);
     });
 };
