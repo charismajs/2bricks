@@ -47,6 +47,11 @@ module.exports = function(express){
         .get(exeController.getOverHttp);
 
 
+    // Partial Views
+    router.route('/partials/*')
+        .get( function (req, res) {
+            res.render('../../public/app/' + req.params);
+        });
 
     router.route('/')
         .get(function(req, res) {
