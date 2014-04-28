@@ -27,7 +27,7 @@ module.exports = function(express){
 
     router.route('/jobs/:name')
         .get(jobController.getOverHttp)
-        .post(jobController.update)
+        .put(jobController.update)
         .delete(jobController.delete);
 
     // TASK CRUD

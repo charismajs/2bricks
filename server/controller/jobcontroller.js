@@ -35,14 +35,13 @@ exports.getList = function(req, res, next) {
 }
 
 exports.update = function(req, res, next) {
-    var newJob = req.body;
-
-    console.log("Name : " + req.params.name);
-    console.log(newJob.name);
+    var json = req.body;
 
     Job.findOne({name: req.params.name}).exec( function(err, job) {
         if (err)
             res.send(err);
+
+        var newJob = new Job(json);
 
         job.command = newJob.command;
         job.arguments = newJob.arguments;
