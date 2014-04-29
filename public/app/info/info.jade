@@ -1,0 +1,42 @@
+.modal-header
+	h3 {{ execution.command }}
+
+.modal-body
+	.row
+		.col-md-4 Commnad
+		.col-md-8 {{ execution.command }}
+	.row
+		.col-md-2 Name
+		.col-md-4 blar..blar..blar..
+		.col-md-2 Status
+		.col-md-4 {{ execution.status }}
+	.row
+		.col-md-2 Start
+		.col-md-4 {{ execution.start | date:'yyyy-MM-dd HH:mm:ss' }}
+		.col-md-2 End
+		.col-md-4 {{ execution.end | date:'yyyy-MM-dd HH:mm:ss' }}
+	.row
+		.col-md-12 Arguments
+		.col-md-12
+			.row
+				.col-md-3 $Direcotry
+				.col-md-6 /home
+				.col-md-3 Absolute directory name
+			.row
+				.col-md-3 $Direcotry
+				.col-md-6 /home
+				.col-md-3 Absolute directory name
+	.row
+		.col-md-4 Files
+		.col-md-8 create.hql
+	.row
+		.col-md-4 Description
+		.col-md-4 Description
+
+	// TODO - Synchronous Logging from STDOUT at Server
+	div {{ execution.log }}
+
+.modal-footer
+	// TODO - Text at button change by status
+	button.btn(ng-click='command()', ng-class="{'btn-primary': execution.status === 'start','btn-danger': execution.status !== 'start'}") start
+	button.btn.btn-warning(ng-click='close()') Close

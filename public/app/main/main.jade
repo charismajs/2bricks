@@ -1,0 +1,25 @@
+.container
+	.jumbotron
+		h1 2 Bricks
+		p Welcome to 2 Bricks!
+
+	.panel.panel-success
+		.panel-heading.text-center Execution List
+			.panel-body
+				.row
+					.col-md-3 명령어
+					.col-md-2 상태
+					.col-md-2 시작일
+					.col-md-2 종료일
+					.col-md-2 작성자
+				.row(ng-repeat='exe in executions')
+					.col-md-12
+						.clickable(ng-click='popupDetail(exe)')
+							.row
+								.col-md-3 {{ exe.command }}
+								.col-md-2 {{ exe.status }}
+								.col-md-2 {{ exe.start | date:'yyyy-MM-dd HH:mm:ss'}}
+								.col-md-2 {{ exe.end | date:'yyyy-MM-dd HH:mm:ss'}}
+								.col-md-2 {{ exe.creator }}
+
+	.model.fade(id='myModel',tabindex='-1',role='dialig')

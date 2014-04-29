@@ -18,6 +18,8 @@
     "angular-mocks": "~1.2.16",
     "angular-resource": "~1.2.16",
     "angular": "~1.2.16",
-    "toastr": "~2.0.1"
+    "toastr": "~2.0.1",
+    "angular-route": "~1.2.16",
+    "angular-bootstrap": "~0.10.0"
   }
 }

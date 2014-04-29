@@ -50,7 +50,7 @@ module.exports = function(express){
     // Partial Views
     router.route('/partials/*')
         .get( function (req, res) {
-            res.render('../../public/app/' + req.params);
+            res.render('../../public/app/' + req.params[0]);
         });
 
     router.route('/')
