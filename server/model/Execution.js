@@ -11,7 +11,9 @@ var ExecutionSchema = mongoose.Schema({
     error : String
 });
 
-ExecutionSchema.statics.create = function (command, taskId, next) {
+// TODO - return only default instance without saving
+
+ExecutionSchema.statics.createWithDefaults = function (command, taskId, next) {
     var i = new this();
 
     i.start = new Date();
@@ -32,6 +34,16 @@ ExecutionSchema.methods.save_async = function(next) {
         }
     });
 };
+
+ExecutionSchema.pre('init', function (next, done) {
+    console.log('init');
+    next();
+});
+
+ExecutionSchema.pre('save', function (next, done) {
+    console.log('save');
+    next();
+});
 
 ExecutionSchema.methods.success = function(log, next) {
     this.end = new Date();

@@ -40,6 +40,7 @@ module.exports = function(express){
 
     // EXECUTION CRUD
     router.route('/executions')
+        // TODO - before call create, we should set default values using model's fn
         .post(exeController.create)
         .get(exeController.getList);
 

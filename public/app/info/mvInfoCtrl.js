@@ -5,9 +5,9 @@ angular.module('app').controller('mvInfoCtrl', function ($scope, $modalInstance,
     $scope.command = execution.status === 'start' ? 'stop' : 'start';
 
     $scope.run = function () {
-        mvExecution.$create(execution);
+        mvExecution.create({command: execution.command});
 
-        $modalInstance.close($scope.selected.item);
+        $modalInstance.close();
     };
 
     $scope.close = function () {

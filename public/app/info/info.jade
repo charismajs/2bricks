@@ -38,5 +38,5 @@
 
 .modal-footer
 	// TODO - Text at button change by status
-	button.btn(ng-click='command()', ng-class="{'btn-primary': execution.status === 'start','btn-danger': execution.status !== 'start'}") start
+	button.btn(ng-click='run()', ng-class="{'btn-primary': execution.status === 'start','btn-danger': execution.status !== 'start'}") start
 	button.btn.btn-warning(ng-click='close()') Close

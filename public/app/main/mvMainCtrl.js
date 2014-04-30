@@ -1,4 +1,4 @@
-angular.module('app').controller('mvMainCtrl', function($scope, $resource, mvExecution, $modal, $log){
+angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvExecution, $modal, $log) {
 
     // TODO - Support paging functions for executions
     $scope.executions = mvExecution.query();
@@ -6,7 +6,7 @@ angular.module('app').controller('mvMainCtrl', function($scope, $resource, mvExe
     // TODO - show a model page for detail information
     // There are only one button which is 'start' if it is finished
     // otherwise, it is 'stop'
-    $scope.popupDetail = function(exe) {
+    $scope.popupDetail = function (exe) {
 
         var modalInstance = $modal.open({
             templateUrl: '/partials/info/info',
