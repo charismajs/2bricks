@@ -4,3 +4,4 @@ public/vendor/
 server/views/*.html
 server/includes/*.html
 public/css/*.css
+.DS_Store
