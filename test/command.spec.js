@@ -66,12 +66,15 @@ describe('Command', function() {
     it('should return a instance of Execution', function(done) {
         var Exe = mongoose.model('Execution');
 
-        Exe.create('ls -al', 'ls', function(exe) {
+        Exe.create(
+          {
+            command: 'ls -al', taskId: 'ls', start:new Date()
+          }, function (exe) {
             exe.status.should.equal('begin');
             exe.should.have.property('start');
             exe.should.not.have.property('log');
             exe.should.not.have.property('error');
-        });
+          });
 
         done();
     });

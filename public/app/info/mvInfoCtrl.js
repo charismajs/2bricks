@@ -1,16 +1,19 @@
 angular.module('app').controller('mvInfoCtrl', function ($scope, $modalInstance, mvExecution, execution) {
 
-    $scope.execution = execution;
+  $scope.execution = execution;
 
-    $scope.command = execution.status === 'start' ? 'stop' : 'start';
+  $scope.command = execution.status === 'start' ? 'stop' : 'start';
 
-    $scope.run = function () {
-        mvExecution.create({command: execution.command});
+  $scope.run = function () {
+    var data = mvExecution.create(
+      {
+        command: execution.command,
+        start: new Date()
+      });
+    $modalInstance.close(data);
+  };
 
-        $modalInstance.close();
-    };
-
-    $scope.close = function () {
-        $modalInstance.dismiss('cancel');
-    };
+  $scope.close = function () {
+    $modalInstance.dismiss('cancel');
+  };
 });

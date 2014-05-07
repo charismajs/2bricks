@@ -3,26 +3,24 @@ var mongoose = require('mongoose');
 var ExecutionSchema = mongoose.Schema({
     taskId : String,
     command: String,
-    start : Date,
+    start : {type:Date},
     end : Date,
     creator : String,
-    status : String,
+    status : {type:String, default:"begin"},
     log : String,
     error : String
 });
 
-// TODO - return only default instance without saving
-
-ExecutionSchema.statics.createWithDefaults = function (command, taskId, next) {
-    var i = new this();
-
-    i.start = new Date();
-    i.status = "begin";
-    i.command = command;
-    i.taskId = taskId;
-
-    i.save_async(next);
-};
+//ExecutionSchema.statics.createWithDefaults = function (command, taskId, next) {
+//  var i = new this();
+//
+//  i.start = new Date();
+//  i.status = "begin";
+//  i.command = command;
+//  i.taskId = taskId;
+//
+//  i.save_async(next);
+//};
 
 ExecutionSchema.methods.save_async = function(next) {
     this.save(function(err, doc) {
@@ -71,7 +69,7 @@ exports.defaultValues = [
         start:new Date(),
         end:new Date(),
         creator:"It's me.",
-        status:"Terrible",
+        status:"begin",
         log:"Finished!"
     },
     {
@@ -81,7 +79,7 @@ exports.defaultValues = [
         start:new Date(),
         end:new Date(),
         creator:"It's me.",
-        status:"Terrible",
+        status:"failed",
         log:"Finished!"
     }
 ];
