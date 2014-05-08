@@ -10,8 +10,8 @@ var baseController = require('../controller/baseController')(Execution);
 
 // Basic Methods
 exports.create = baseController.create;
-exports.getOverHttp = baseController.getOverHttp;
-exports.getList = baseController.getList;
+exports.get = baseController.get;
+exports.list = baseController.list;
 
 
 // Private Methods
@@ -29,15 +29,11 @@ var replaceCommandText = function (job, task) {
   return command;
 };
 
-var _run = function (cmd, next) {
+exports.run = function (cmd, next) {
   child = exec(cmd, function (error, stdout, stderr) {
-//        sys.print('stdout: ' + stdout);
-//        sys.print('stderr: ' + stderr);
     if (error !== null) {
       console.log('exec error: ' + error);
-//            execution.failed(stdout, error);
     }
-//        execution.success(stdout);
     return next(stdout);
   });
 };
@@ -57,18 +53,5 @@ exports.getCommand = function (taskId, next) {
         }
       });
     }
-  });
-};
-
-exports.run = _run;
-
-exports.runOverHttp = function (req, res, next) {
-  var data = req.body;
-  Execution.create(data, function(err, exe) {
-    _run(exe.command, function(log){
-      exe.success(log).save(function(err, result) {
-        res.send(result);
-      });
-    });
   });
 };

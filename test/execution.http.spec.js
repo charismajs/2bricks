@@ -1,7 +1,8 @@
 var app = require('./helper/app.js'),
+  con = require('../server/config/constant'),
   request = require('supertest'),
   mongoose = require('mongoose'),
-  exeCtrl = require('../server/controller/executeController');
+  exeCtrl = require('../server/controller/executionController');
 
 describe('REST API for Execution - ', function() {
   var url = 'http://localhost:3030';
@@ -48,4 +49,46 @@ describe('REST API for Execution - ', function() {
       });
   });
 
+  it('should return a list of executions', function (done) {
+
+    request(url)
+      .get('/executions')
+      .expect(200)
+      .end(function(err, res) {
+        if (err) {
+          throw err;
+        }
+
+        var executions = res.body;
+        executions.should.not.null;
+        executions.length.should.gt(0);
+
+        done();
+      });
+  });
+
+
+  it('should return a inserted execution', function(done) {
+    var Execution = mongoose.model(con.model.execution);
+
+    Execution.create(
+      {
+        command: 'ls -al',
+        taskId: 'ls',
+        start: new Date()
+      },
+      function (err, exe) {
+        request(url)
+          .get('/executions' + '/' + exe._id)
+          .expect(200)
+          .end(function(err, res) {
+            var ret_exe = res.body;
+            ret_exe.command.should.equal(exe.command);
+            ret_exe.status.should.equal(exe.status);
+            ret_exe._id.should.equal(exe._id.toString());
+            done();
+          });
+      });
+
+  });
 });

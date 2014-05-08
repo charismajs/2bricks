@@ -3,52 +3,31 @@
  */
 
 module.exports = function (model) {
-  var getFn = function (id, next) {
-    model.findOne({_id: id}).exec(function (err, data) {
-      if (data)
-        next(data);
-    });
-  };
-
   var result = {
-    create: function (req, res, next) {
-      var data = req.body;
-
-      model.create(data, function (err, result) {
-        if (err) {
-          res.send(err);
-        }
-
-        if (next)
-          next(result);
-        else
-          res.send(result);
-      })
-    },
-
-    getList: function (req, res, next) {
+    list: function (next) {
       model.find(function (err, list) {
         if (err)
-          res.send(err);
+          throw err;
 
-        res.json(list);
+        if (next)
+          next(list);
+        else
+          return list;
       })
     },
 
-    get: getFn,
+    get: function (id, next) {
+      model.findOne({_id: id}).exec(function (err, data) {
+        if (err)
+          throw err;
 
-    getOverHttp: function (req, res, next) {
-      var id = req.params.name;
-      getFn(id, function (data) {
-        if (data == null) {
-          res.status(404).json({status: 'Not found - ' + id});
-        }
-        res.json(data);
+        if (data)
+          next(data);
       });
     }
   };
 
-  // TODO - Make put API for updating
+// TODO - Make put API for updating
 
   return result;
 };

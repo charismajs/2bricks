@@ -1,7 +1,7 @@
 var app = require('./helper/app.js'),
   mongoose = require('mongoose'),
   con = require('../server/config/constant'),
-  exeCtrl = require('../server/controller/executeController');
+  exeCtrl = require('../server/controller/executionController');
 
 describe('CRUD for Executions -', function () {
 

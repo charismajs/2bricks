@@ -1,48 +1,46 @@
 /**
  * Created by kp on 21/04/2014.
  */
-var jobController = require('../controller/jobController');
-var mongoose = require('mongoose'), con = require('./constant');
+var con = require('./constant'),
+  mongoose = require('mongoose'),
+  jobRouter = require('../router/job'),
+  taskRouter = require('../router/task'),
+  executionRouter = require('../router/execution'),
+  jobController = require('../controller/jobController');
+
 
 module.exports = function (express) {
 
   var router = express.Router();
 
-  var Task = mongoose.model(con.model.task);
-  var taskController = require('../controller/baseController')(Task);
-  var exeController = require('../controller/executeController');
-
-  router.use(function (req, res, next) {
-    // do logging
-    console.log('Something is happening.');
-    next();
-  });
 
   // JOB CRUD
   router.route('/jobs')
     .post(jobController.create)
-    .get(jobController.getList);
+    .get(jobController.list);
 
   router.route('/jobs/:name')
-    .get(jobController.getOverHttp)
+    .get(jobController.get)
     .put(jobController.update)
     .delete(jobController.delete);
 
   // TASK CRUD
   router.route('/tasks')
-    .post(taskController.create)
-    .get(taskController.getList);
+    .post(taskRouter.create)
+    .get(taskRouter.list);
 
   router.route('/tasks/:id')
-    .get(taskController.getOverHttp);
+    .get(taskRouter.get);
+
 
   // EXECUTION CRUD
   router.route('/executions')
-    .post(exeController.runOverHttp)
-    .get(exeController.getList);
+    .post(executionRouter.run)
+    .get(executionRouter.list);
 
   router.route('/executions/:id')
-    .get(exeController.getOverHttp);
+    .get(executionRouter.get);
+
 
 
   // Partial Views

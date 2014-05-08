@@ -26,7 +26,7 @@ exports.create = function (req, res, next) {
   })
 }
 
-exports.getList = function (req, res, next) {
+exports.list = function (req, res, next) {
   Job.find(function (err, joblist) {
     if (err)
       res.send(err);
@@ -59,7 +59,7 @@ exports.update = function (req, res, next) {
   });
 };
 
-exports.getOverHttp = function (req, res, next) {
+exports.get = function (req, res, next) {
   get(req.params.name, function (job) {
     if (job == null) {
       res.status(404).json({status: 'Not found job.'});
