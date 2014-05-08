@@ -33,10 +33,9 @@
 		.col-md-4 Description
 		.col-md-4 Description
 
-	// TODO - Synchronous Logging from STDOUT at Server
 	div {{ execution.log }}
 
 .modal-footer
-	// TODO - Text at button change by status
-	button.btn(ng-click='run()', ng-class="{'btn-primary': execution.status === 'start','btn-danger': execution.status !== 'start'}") start
-	button.btn.btn-warning(ng-click='close()') Close
+button.btn.btn-primary(ng-click='start()', ng-show="execution.status !== 'begin'") start
+button.btn.btn-danger(ng-click='stop()', ng-show="execution.status === 'begin'") stop
+button.btn.btn-warning(ng-click='close()') Close

@@ -2,13 +2,13 @@
  * Created by kp on 21/04/2014.
  */
 var jobController = require('../controller/jobController');
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'), con = require('./constant');
 
 module.exports = function (express) {
 
   var router = express.Router();
 
-  var Task = mongoose.model('Task');
+  var Task = mongoose.model(con.model.task);
   var taskController = require('../controller/baseController')(Task);
   var exeController = require('../controller/executeController');
 

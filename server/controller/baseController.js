@@ -5,7 +5,8 @@
 module.exports = function (model) {
   var getFn = function (id, next) {
     model.findOne({_id: id}).exec(function (err, data) {
-      next(data);
+      if (data)
+        next(data);
     });
   };
 

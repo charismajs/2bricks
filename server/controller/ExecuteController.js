@@ -1,9 +1,10 @@
 var sys = require('sys'),
+  con = require('../config/constant'),
   exec = require('child_process').exec;
 
 var mongoose = require('mongoose'),
-  Task = mongoose.model('Task'),
-  Execution = mongoose.model('Execution');
+  Task = mongoose.model(con.model.task),
+  Execution = mongoose.model(con.model.execution);
 
 var baseController = require('../controller/baseController')(Execution);
 
@@ -26,9 +27,9 @@ var replaceCommandText = function (job, task) {
   }
 
   return command;
-}
+};
 
-var run = function (cmd, next) {
+var _run = function (cmd, next) {
   child = exec(cmd, function (error, stdout, stderr) {
 //        sys.print('stdout: ' + stdout);
 //        sys.print('stderr: ' + stderr);
@@ -59,13 +60,15 @@ exports.getCommand = function (taskId, next) {
   });
 };
 
-exports.run = run;
+exports.run = _run;
 
 exports.runOverHttp = function (req, res, next) {
-  baseController.create(req, res, function(data){
-    run(data.command, function(log){
-      data.success(log, null);
+  var data = req.body;
+  Execution.create(data, function(err, exe) {
+    _run(exe.command, function(log){
+      exe.success(log).save(function(err, result) {
+        res.send(result);
+      });
     });
   });
 };
-
