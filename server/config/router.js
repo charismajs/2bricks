@@ -17,12 +17,12 @@ module.exports = function (express) {
   // JOB CRUD
   router.route('/jobs')
     .post(jobController.create)
-    .get(jobController.list);
+    .get(jobRouter.list);
 
   router.route('/jobs/:name')
-    .get(jobController.get)
-    .put(jobController.update)
-    .delete(jobController.delete);
+    .get(jobRouter.get)
+    .put(jobRouter.update)
+    .delete(jobRouter.delete);
 
   // TASK CRUD
   router.route('/tasks')

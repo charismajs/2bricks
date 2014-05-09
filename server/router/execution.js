@@ -1,10 +1,9 @@
 var con = require('../config/constant'),
   mongoose = require('mongoose'),
   Execution = mongoose.model(con.model.execution),
-  baseRouter = require('./base')(Execution),
+  baseRouter = require('./base')(con.model.execution),
   exeCtrl = require('../controller/executionController');
 
-// TODO - Change a function name from 'runOverHttp' to 'run'
 exports.run = function (req, res) {
   var data = req.body;
   Execution.create(data, function(err, execution) {

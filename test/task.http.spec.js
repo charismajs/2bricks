@@ -15,9 +15,9 @@ describe('REST API for tasks - ', function () {
           throw err;
         }
 
-        var executions = res.body;
-        executions.should.not.null;
-        executions.length.should.gt(0);
+        var list = res.body;
+        list.should.not.null;
+        list.length.should.gt(0);
 
         done();
       });

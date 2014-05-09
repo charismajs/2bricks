@@ -1,4 +1,7 @@
-module.exports = function (model) {
+var mongoose = require('mongoose');
+
+module.exports = function (modelname) {
+  var model = mongoose.model(modelname);
   var base = require('../controller/baseController')(model);
 
   var functions = {

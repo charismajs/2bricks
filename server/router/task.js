@@ -1,8 +1,6 @@
 var con = require('../config/constant'),
   mongoose = require('mongoose'),
-  Task = mongoose.model(con.model.task),
-  baseRouter = require('./base')(Task),
-  exeCtrl = require('../controller/executionController');
+  baseRouter = require('./base')(con.model.task);
 
 
 exports.create = baseRouter.create;
