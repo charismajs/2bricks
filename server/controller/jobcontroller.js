@@ -26,23 +26,13 @@ exports.create = function (req, res, next) {
   })
 }
 
-exports.list = function (req, res, next) {
-  Job.find(function (err, joblist) {
-    if (err)
-      res.send(err);
 
-    res.json(joblist);
-  })
-}
+exports.update = function(name, data, next){
+  Job.findOne({name: name}).exec(function (err, job) {
 
-exports.update = function (req, res, next) {
-  var json = req.body;
+    var newJob = new Job(data);
 
-  Job.findOne({name: req.params.name}).exec(function (err, job) {
-    if (err)
-      res.send(err);
-
-    var newJob = new Job(json);
+    // TODO - Refactoring UPDATE  job.update(newJob), job.update(json)
 
     job.command = newJob.command;
     job.arguments = newJob.arguments;
@@ -50,41 +40,21 @@ exports.update = function (req, res, next) {
     job.comments = newJob.comments;
     job.createdDate = new Date();
 
-    job.save(function (err) {
-      if (err)
-        res.send(err);
+    job.save(function (err, saved) {
 
-      res.json({status: 'update', data: job});
+      if (saved)
+        next(saved);
     });
   });
-};
+}
 
-exports.get = function (req, res, next) {
-  get(req.params.name, function (job) {
-    if (job == null) {
-      res.status(404).json({status: 'Not found job.'});
-    }
-    res.json(job);
-  })
-};
 
-exports.get = this.get;
-
-var get = function (jobId, next) {
+exports.get = function (jobId, next) {
   Job.findOne({name: jobId}).exec(function (err, job) {
+    if (err)
+      throw err;
+
     next(job);
   });
 };
-
-exports.delete = function (req, res, next) {
-  Job.remove({name: req.params.name}, function (err, job) {
-
-    if (err)
-      res.send(err);
-
-    res.json({status: 'deleted', data: req.params.name});
-  });
-};
-
-
 
