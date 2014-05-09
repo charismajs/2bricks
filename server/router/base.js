@@ -8,22 +8,20 @@ module.exports = function (modelname) {
 
     create: function (req, res) {
       var data = req.body;
-      model.create(data, function (err, result) {
+      base.create(data, function (err, entity) {
         if (err) {
-          res.send(err);
+          res.status(400).send({message: err.toString()});
         }
-
-        if (result) {
-          res.json(result);
+        else {
+          res.json(entity);
         }
-
       });
     },
 
     list: function (req, res) {
       base.list(function (list) {
         if (list == null) {
-          res.status(404).json({status: 'Not found '});
+          res.status(404).json({message: 'Not found '});
         }
         res.json(list);
       });
@@ -33,7 +31,7 @@ module.exports = function (modelname) {
       var id = req.params.id;
       base.get(id, function (data) {
         if (data == null) {
-          res.status(404).json({status: 'Not found - ' + id});
+          res.status(404).json({message: 'Not found - ' + id});
         }
         res.json(data);
       });

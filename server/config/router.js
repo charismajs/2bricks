@@ -16,7 +16,7 @@ module.exports = function (express) {
 
   // JOB CRUD
   router.route('/jobs')
-    .post(jobController.create)
+    .post(jobRouter.create)
     .get(jobRouter.list);
 
   router.route('/jobs/:name')

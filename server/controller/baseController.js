@@ -4,6 +4,18 @@
 
 module.exports = function (model) {
   var result = {
+    create: function(data, next) {
+      model.create(data, function(err, entity) {
+
+        if (err) {
+          if (err.toString().indexOf('E11000') > -1) {
+            err = new Error('Duplicate Exception at ' + model.constructor.modelName);
+          }
+        }
+
+        next(err, entity);
+      });
+    },
     list: function (next) {
       model.find(function (err, list) {
         if (err)

@@ -3,6 +3,8 @@ var con = require('../config/constant'),
   baseRouter = require('./base')(con.model.job),
   jobCtrl = require('../controller/jobController');
 
+exports.create = baseRouter.create;
+exports.list = baseRouter.list;
 
 exports.get = function (req, res) {
   jobCtrl.get(req.params.name, function (job) {
@@ -13,7 +15,6 @@ exports.get = function (req, res) {
   })
 };
 
-exports.list = baseRouter.list;
 
 exports.update = function (req, res) {
   var data = req.body;
