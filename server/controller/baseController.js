@@ -28,8 +28,8 @@ module.exports = function (model) {
       })
     },
 
-    get: function (id, next) {
-      model.findOne({_id: id}).exec(function (err, data) {
+    get: function (condition, next) {
+      model.findOne(condition).exec(function (err, data) {
         if (err)
           throw err;
 

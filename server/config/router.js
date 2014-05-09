@@ -5,8 +5,7 @@ var con = require('./constant'),
   mongoose = require('mongoose'),
   jobRouter = require('../router/job'),
   taskRouter = require('../router/task'),
-  executionRouter = require('../router/execution'),
-  jobController = require('../controller/jobController');
+  executionRouter = require('../router/execution');
 
 
 module.exports = function (express) {
@@ -14,7 +13,7 @@ module.exports = function (express) {
   var router = express.Router();
 
 
-  // JOB CRUD
+  // JOB
   router.route('/jobs')
     .post(jobRouter.create)
     .get(jobRouter.list);
@@ -24,7 +23,7 @@ module.exports = function (express) {
     .put(jobRouter.update)
     .delete(jobRouter.delete);
 
-  // TASK CRUD
+  // TASK
   router.route('/tasks')
     .post(taskRouter.create)
     .get(taskRouter.list);
@@ -33,7 +32,7 @@ module.exports = function (express) {
     .get(taskRouter.get);
 
 
-  // EXECUTION CRUD
+  // EXECUTION
   router.route('/executions')
     .post(executionRouter.run)
     .get(executionRouter.list);

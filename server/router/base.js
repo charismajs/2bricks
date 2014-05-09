@@ -27,9 +27,10 @@ module.exports = function (modelname) {
       });
     },
 
-    get: function (req, res) {
+    get: function (req, res, condition) {
       var id = req.params.id;
-      base.get(id, function (data) {
+      condition
+      base.get(condition, function (data) {
         if (data == null) {
           res.status(404).json({message: 'Not found - ' + id});
         }
