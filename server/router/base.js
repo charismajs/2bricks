@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+  con = require('../config/constant');
 
 module.exports = function (modelname) {
   var model = mongoose.model(modelname);
@@ -23,18 +24,21 @@ module.exports = function (modelname) {
         if (list == null) {
           res.status(404).json({message: 'Not found '});
         }
-        res.json(list);
+        else {
+          res.json(list);
+        }
       });
     },
 
-    get: function (req, res, condition) {
-      var id = req.params.id;
-      condition
-      base.get(condition, function (data) {
+    get: function (req, res) {
+      var condition = req.params.id ? {_id:req.params.id} : {name:req.params.name};
+      base.get(condition, function (err, data) {
         if (data == null) {
-          res.status(404).json({message: 'Not found - ' + id});
+          res.status(404).json({message: con.message.not_found});
         }
-        res.json(data);
+        else {
+          res.json(data);
+        }
       });
     }
   };

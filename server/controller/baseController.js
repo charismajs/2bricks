@@ -30,11 +30,7 @@ module.exports = function (model) {
 
     get: function (condition, next) {
       model.findOne(condition).exec(function (err, data) {
-        if (err)
-          throw err;
-
-        if (data)
-          next(data);
+        next(err, data);
       });
     }
   };
