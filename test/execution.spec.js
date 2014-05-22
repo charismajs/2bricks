@@ -36,78 +36,78 @@ describe('CRUD for Executions -', function () {
 //    });
 //  });
 
-  it('should return replaced command which is not related database', function (done) {
-    var expected = 'ls -al /home';
-
-    var job = {
-      command: 'ls -al $folder',
-      arguments: [
-        {
-          name: '$folder',
-          description: 'Looking for the directory'
-        }
-      ]
-    };
-
-    var task = {
-      arguments: [
-        {
-          name: "$folder",
-          value: "/home"
-        }
-      ]
-    };
-
-    exeCtrl.replace(job, task).should.equal(expected);
-    done();
-  });
-
-  it('should return stdout, after execute a command', function (done) {
-    var expected = 'HELLO WORLD\n';
-    var command = 'echo "HELLO WORLD"';
-
-    exeCtrl.run(command, function (stdout) {
-      stdout.should.equal(expected);
-      done();
-    });
-  });
-
-  it('should return a instance of Execution', function (done) {
-    var Exe = mongoose.model(con.model.execution);
-
-    Exe.create(
-      {
-        command: 'ls -al', taskId: 'ls', start: new Date()
-      }, function (err, exe) {
-        exe.status.should.equal('begin');
-        exe.should.have.property('start');
-        exe.should.not.have.property('log');
-        exe.should.not.have.property('error');
-        done();
-      });
-
-  });
-
-  it('should return a successed execution', function (done) {
-    var Exe = mongoose.model(con.model.execution);
-    var execution = new Exe();
-
-    execution.success('log').save(function (err, exe) {
-      exe.status.should.equal(con.status.success);
-      exe.log.should.equal('log');
-      done();
-    });
-  });
-
-  it('should return a failed execution', function (done) {
-    var Exe = mongoose.model(con.model.execution);
-    var execution = new Exe();
-
-    execution.failed('', 'Permission Denied', function (exe) {
-      exe.status.should.equal(con.status.failed);
-      exe.log.should.equal('');
-      exe.error.should.equal('Permission Denied');
-      done();
-    });
-  });
+//  it('should return replaced command which is not related database', function (done) {
+//    var expected = 'ls -al /home';
+//
+//    var job = {
+//      command: 'ls -al $folder',
+//      arguments: [
+//        {
+//          name: '$folder',
+//          description: 'Looking for the directory'
+//        }
+//      ]
+//    };
+//
+//    var task = {
+//      arguments: [
+//        {
+//          name: "$folder",
+//          value: "/home"
+//        }
+//      ]
+//    };
+//
+//    exeCtrl.replace(job, task).should.equal(expected);
+//    done();
+//  });
+//
+//  it('should return stdout, after execute a command', function (done) {
+//    var expected = 'HELLO WORLD\n';
+//    var command = 'echo "HELLO WORLD"';
+//
+//    exeCtrl.run(command, function (stdout) {
+//      stdout.should.equal(expected);
+//      done();
+//    });
+//  });
+//
+//  it('should return a instance of Execution', function (done) {
+//    var Exe = mongoose.model(con.model.execution);
+//
+//    Exe.create(
+//      {
+//        command: 'ls -al', taskId: 'ls', start: new Date()
+//      }, function (err, exe) {
+//        exe.status.should.equal('begin');
+//        exe.should.have.property('start');
+//        exe.should.not.have.property('log');
+//        exe.should.not.have.property('error');
+//        done();
+//      });
+//
+//  });
+//
+//  it('should return a successed execution', function (done) {
+//    var Exe = mongoose.model(con.model.execution);
+//    var execution = new Exe();
+//
+//    execution.success('log').save(function (err, exe) {
+//      exe.status.should.equal(con.status.success);
+//      exe.log.should.equal('log');
+//      done();
+//    });
+//  });
+//
+//  it('should return a failed execution', function (done) {
+//    var Exe = mongoose.model(con.model.execution);
+//    var execution = new Exe();
+//
+//    execution.failed('', 'Permission Denied', function (exe) {
+//      exe.status.should.equal(con.status.failed);
+//      exe.log.should.equal('');
+//      exe.error.should.equal('Permission Denied');
+//      done();
+//    });
+//  });
 });

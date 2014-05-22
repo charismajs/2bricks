@@ -10,13 +10,13 @@ var TaskSchema = mongoose.Schema({
 exports.Schema = TaskSchema;
 exports.defaultValues = [
     {
-        jobId:'ls',
+        //jobId:'ls',
         arguments:[],
         createDate:new Date(),
         creator:"It's me."
     },
     {
-        jobId:'cat',
+        //jobId:'cat',
         arguments:[],
         createDate:new Date(),
         creator:"It's me."

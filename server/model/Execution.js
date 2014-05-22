@@ -52,7 +52,7 @@ ExecutionSchema.methods.failed = function (log, err, next) {
 exports.Schema = ExecutionSchema;
 exports.defaultValues = [
   {
-    taskId: 'ls',
+    //taskId: 'ls',
     command: 'ls -al /home',
     arguments: [],
     start: new Date(),
@@ -62,7 +62,7 @@ exports.defaultValues = [
     log: "Finished!"
   },
   {
-    taskId: 'less',
+    //taskId: 'less',
     command: 'less README.md',
     arguments: [],
     start: new Date(),

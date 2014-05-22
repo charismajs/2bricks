@@ -23,6 +23,9 @@ module.exports = function (express) {
     .put(jobRouter.update)
     .delete(jobRouter.delete);
 
+  router.route('/jobs/id/:id')
+    .get(jobRouter.get);
+
   // TASK
   router.route('/tasks')
     .post(taskRouter.create)

@@ -15,26 +15,26 @@ describe('REST API for Job -', function () {
     createdDate: new Date()
   };
 
-//  after(function (done) {
+//  before(function (done) {
 //    var Job = mongoose.model(con.model.job);
 //    Job.remove({'comments': 'by test case'}, done);
 //  });
-
-  it('should return new inserted job by POST - create', function (done) {
-    request(url)
-      .post('/jobs')
-      .send(job)
-      .expect(200)
-      .end(function (err, res) {
-        if (err) {
-          throw err;
-        }
-        res.body.name.should.equal(job.name);
-        res.body.command.should.equal(job.command);
-        res.body.should.have.property("_id");
-        done();
-      });
-  });
+//
+//  it('should return new inserted job by POST - create', function (done) {
+//    request(url)
+//      .post('/jobs')
+//      .send(job)
+//      .expect(200)
+//      .end(function (err, res) {
+//        if (err) {
+//          throw err;
+//        }
+//        res.body.name.should.equal(job.name);
+//        res.body.command.should.equal(job.command);
+//        res.body.should.have.property("_id");
+//        done();
+//      });
+//  });
 
   it('should return error trying to save duplicate job by POST - re-insert', function (done) {
     request(url)
@@ -104,14 +104,14 @@ describe('REST API for Job -', function () {
       });
   });
 
-  it('should return a delete message, when deleted a job', function (done) {
-    request(url)
-      .delete('/jobs/' + job.name)
-      .expect(200)
-      .end(function (err, res) {
-        res.status.should.equal(200);
-        res.body.message.should.equal(con.message.delete + job.name);
-        done();
-      });
-  });
+//  it('should return a delete message, when deleted a job', function (done) {
+//    request(url)
+//      .delete('/jobs/' + job.name)
+//      .expect(200)
+//      .end(function (err, res) {
+//        res.status.should.equal(200);
+//        res.body.message.should.equal(con.message.delete + job.name);
+//        done();
+//      });
+//  });
 });
