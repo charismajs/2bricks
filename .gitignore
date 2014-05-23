@@ -3,5 +3,7 @@ node_modules/
 public/vendor/
 server/views/*.html
 server/includes/*.html
+public/app/info/*.html
+public/app/main/*.html
 public/css/*.css
 .DS_Store
