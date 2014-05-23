@@ -10,6 +10,7 @@
         a(ng-click="tabName = 'info'") Info
       li(ng-class="{active: tabName == 'file'}")
         a(ng-click="tabName = 'file'") File
+
     .tab-content
       div(ng-switch='tabName')
         div(ng-switch-when='info')
@@ -31,7 +32,7 @@
               th Arguments
               td(colspan='3')
                 .row(ng-repeat='arg in task.arguments')
-                  .col
+                  .col(style='padding-left:15px')
                     .row(data-toggle='tooltip', data-placement='top', title="arguments' description in Job")
                       .col-md-3 {{ arg.name }}
                       .col-md-6

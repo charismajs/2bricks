@@ -1,0 +1,52 @@
+.modal-header
+  h3 Create Execution
+
+.modal-body
+  .tabbable
+    ul.nav.nav-tabs
+      li(ng-class="{active: tabName == 'info'}")
+        a(ng-click="tabName = 'info'") Info
+      li(ng-class="{active: tabName == 'file'}")
+        a(ng-click="tabName = 'file'") File
+    .tab-content
+      div(ng-switch='tabName')
+        div(ng-switch-when='info')
+          table.table(style='margin-top:10px;')
+            tr
+              th Command
+              td(colspan='3')
+                input(type='text', placeholder="Input 'Command' with arguments", ng-model='newInfo.commandName')
+                div {{ newInfo.commandName }}
+            tr
+              th Name
+              td(colspan='3')
+                input(type='text', placeholder="Input 'Name'", ng-model='newInfo.jobName')
+                div {{ newInfo.jobName }}
+            tr
+              th Arguments
+              td(colspan='3')
+                .row
+                  .col-md-3
+                    //- ng-model
+                    input(type='text', placeholder="Argument's Name")
+                  .col-md-3
+                    input(type='text', placeholder="Argument's Value")
+                  .col-md-3
+                    input(type='text', placeholder="Argument's Description")
+            tr
+              th Comments
+              td(colspan='3')
+                textarea(rows='5', cols='70', ng-model='newInfo.comments') {{ newInfo.comments }}
+
+        div(ng-switch-when='file')
+          table.table(style='margin-top:10px;')
+            tr
+              th Files
+              td(colspan='3')
+                input(type='file', on-read-file='showContent($fileContent)')
+                div(ng-if='content')
+                  pre {{ content }}
+
+.modal-footer
+  button.btn.btn-primary(ng-click='start(newInfo)') Start
+  button.btn.btn-warning(ng-click='cancel()') Cancel

@@ -25,4 +25,11 @@ angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvEx
     });
 
   };
+
+  $scope.popupNew = function() {
+    var modalInstance = $modal.open({
+      templateUrl: '/partials/info/new',
+      controller: 'mvInfoNewCtrl'
+    });
+  };
 });

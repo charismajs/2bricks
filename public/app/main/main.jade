@@ -1,7 +1,8 @@
 .container
-  .jumbotron
-    h1 2 Bricks
-    p Welcome to 2 Bricks!
+  .panel.panel-default
+    .panel-heading
+      h3 2 Bricks
+      .panel-body Welcome to 2 Bricks!
 
   .panel.panel-success
     h3.text-center Execution List
@@ -20,5 +21,7 @@
           td.text-center {{ exe.start | date:'yyyy-MM-dd HH:mm:ss'}}
           td.text-center {{ exe.end | date:'yyyy-MM-dd HH:mm:ss'}}
           td.text-center {{ exe.creator }}
+
+  button.btn.btn-primary.pull-right(style='margin-right:10px;', ng-click='popupNew()') New
 
   .model.fade(id='myModel',tabindex='-1',role='dialog')
