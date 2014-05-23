@@ -2,8 +2,11 @@ angular.module('app').controller('mvInfoCtrl',
   function ($scope, $modalInstance, mvModelApi, execution) {
 
     $scope.execution = execution;
-    $scope.task = mvModelApi.Task.get({id:$scope.execution.taskId.toString()}, function() {
-      $scope.job = mvModelApi.Job.get({id:$scope.task.jobId});
+    mvModelApi.Task.get({id:$scope.execution.taskId.toString()}, function(task) {
+      $scope.task = task;
+      mvModelApi.Job.get({id:$scope.task.jobId}, function(job) {
+        $scope.job = job;
+      });
     });
 
     $scope.start = function () {
