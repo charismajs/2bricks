@@ -2,69 +2,56 @@
   h3 {{ execution.command }}
   div ( {{ execution._id }} )
 
+
 .modal-body
-  table.table
-    tr
-      th Command
-      td(colspan='3') {{ execution.command }}
-    tr
-      th Name
-      td {{ job.name }}
-      th Status
-      td {{ execution.status }}
-    tr
-      th Start
-      td {{ execution.start | date:'yyyy-MM-dd HH:mm:ss' }}
-      th End
-      td {{ execution.end | date:'yyyy-MM-dd HH:mm:ss' }}
-    tr
-      th Arguments
-      td(colspan='3')
-        .row(ng-repeat='arg in task.arguments')
-          .col
-            .row(data-toggle='tooltip', data-placement='top', title="arguments' description in Job")
-              .col-md-3 {{ arg.name }}
-              .col-md-6 {{ arg.value }}
-    tr
-      th Files
-      td(colspan='3')
-        span(ng-repeat='file in job.files') {{ file.name }}
-    tr
-      th Comments
-      td(colspan='3') {{ job.comments }}
+  .tabbable
+    ul.nav.nav-tabs
+      li(ng-class="{active: tabName == 'info'}")
+        a(ng-click="tabName = 'info'") Info
+      li(ng-class="{active: tabName == 'file'}")
+        a(ng-click="tabName = 'file'") File
+    .tab-content
+      div(ng-switch='tabName')
+        div(ng-switch-when='info')
+          table.table(style='margin-top:10px;')
+            tr
+              th Command
+              td(colspan='3') {{ execution.command }}
+            tr
+              th Name
+              td {{ job.name }}
+              th Status
+              td {{ execution.status }}
+            tr
+              th Start
+              td {{ execution.start | date:'yyyy-MM-dd HH:mm:ss' }}
+              th End
+              td {{ execution.end | date:'yyyy-MM-dd HH:mm:ss' }}
+            tr
+              th Arguments
+              td(colspan='3')
+                .row(ng-repeat='arg in task.arguments')
+                  .col
+                    .row(data-toggle='tooltip', data-placement='top', title="arguments' description in Job")
+                      .col-md-3 {{ arg.name }}
+                      .col-md-6
+                        input(type='text', value='{{arg.value}}')
+            tr
+              th Comments
+              td(colspan='3')
+                textarea(rows='5', cols='70') {{ job.comments }}
+            tr
+              td(colspan='4') {{ execution.log }}
 
-    tr
-      td(colspan='4') {{ execution.log }}
+        div(ng-switch-when='file')
+          table.table(style='margin-top:10px;')
+            tr
+              th Files
+              td(colspan='3')
+                input(type='file', on-read-file='showContent($fileContent)')
+                div(ng-if='content')
+                  pre {{ content }}
 
-  //.row
-  //  .col-md-4 Commnad
-  //  .col-md-8 {{ execution.command }}
-  //.row
-  //  .col-md-2 Name
-  //  .col-md-4 {{ job.name }}
-  //  .col-md-2 Status
-  //  .col-md-4 {{ execution.status }}
-  //.row
-  //  .col-md-2 Start
-  //  .col-md-4 {{ execution.start | date:'yyyy-MM-dd HH:mm:ss' }}
-  //  .col-md-2 End
-  //  .col-md-4 {{ execution.end | date:'yyyy-MM-dd HH:mm:ss' }}
-  //.row
-  //  .col-md-12 Arguments
-  //  .col-md-12
-  //    .row(ng-repeat='arg in task.arguments')
-  //      .col-md-3 {{ arg.name }}
-  //      .col-md-6 {{ arg.value }}
-  //      .col-md-3 arguments' description in Job
-  //.row
-  //  .col-md-4 Files
-  //  .col-md-8
-  //    span(ng-repeat='file in job.files') {{ file.name }}
-  //.row
-  //  .col-md-4 Comments
-  //  .col-md-4 {{ job.comments }}
-  //
-  //div {{ execution.log }}
 
 .modal-footer
   button.btn.btn-primary(ng-click='start()', ng-show="execution.status !== 'begin'") Start
