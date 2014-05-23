@@ -31,5 +31,11 @@ angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvEx
       templateUrl: '/partials/info/new',
       controller: 'mvInfoNewCtrl'
     });
+
+    modalInstance.result.then(function(exe) {
+      $scope.executions = $scope.executions.concat(exe);
+    }, function() {
+      $log.info('Modal dismissed at: ' + new Date())
+    });
   };
 });
