@@ -6,24 +6,14 @@ angular.module('app').controller('mvInfoCtrl',
     $scope.content = '';
     $scope.name = '';
 
-    mvModelApi.Task.get({id:$scope.execution.taskId.toString()}, function(task) {
-      $scope.task = task;
-      mvModelApi.Job.get({id:$scope.task.jobId}, function(job) {
-        $scope.job = job;
-      });
-    });
-
-    $scope.showContent = function($fileContent){
-      $scope.content = $fileContent;
+    $scope.showContent = function($fileContent, $fileName, file){
+      console.log('file name : ' + $fileName);
+      file.name = $fileName;
+      file.content = $fileContent;
     };
 
     $scope.start = function () {
-      var data = mvModelApi.Execution.create(
-        {
-          command: execution.command,
-          start: new Date()
-        });
-
+      var data = mvModelApi.createExecution(execution);
       $modalInstance.close(data);
     };
 

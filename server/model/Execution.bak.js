@@ -2,16 +2,24 @@ var mongoose = require('mongoose'),
   con = require('../config/constant');
 
 var ExecutionSchema = mongoose.Schema({
+  taskId: String,
   command: String,
-  name: String,
-  arguments : [{name:String, value :String, description:String}],
-  files : [{name:String, content :String, description:String}],
   start: {type: Date},
   end: Date,
+  creator: String,
   status: {type: String, default: "begin"},
-  comment: String,
-  log: String
+  log: String,
+  error: String
 });
+
+
+ExecutionSchema.statics.ignite = function (data) {
+  var prom = new mongoose.Promise();
+  setTimeout(function () {
+    prom.resolve(null, 'Execution');
+  } , 500);
+  return prom;
+};
 
 ExecutionSchema.methods.save_async = function (next) {
   this.save(function (err, doc) {
@@ -42,25 +50,25 @@ ExecutionSchema.methods.failed = function (log, err, next) {
 };
 
 exports.Schema = ExecutionSchema;
-//exports.defaultValues = [
-//  {
-//    //taskId: 'ls',
-//    command: 'ls -al /home',
-//    arguments: [],
-//    start: new Date(),
-//    end: new Date(),
-//    creator: "It's me.",
-//    status: con.status.start,
-//    log: "Finished!"
-//  },
-//  {
-//    //taskId: 'less',
-//    command: 'less README.md',
-//    arguments: [],
-//    start: new Date(),
-//    end: new Date(),
-//    creator: "It's me.",
-//    status: con.status.failed,
-//    log: "Finished!"
-//  }
-//];
+exports.defaultValues = [
+  {
+    //taskId: 'ls',
+    command: 'ls -al /home',
+    arguments: [],
+    start: new Date(),
+    end: new Date(),
+    creator: "It's me.",
+    status: con.status.start,
+    log: "Finished!"
+  },
+  {
+    //taskId: 'less',
+    command: 'less README.md',
+    arguments: [],
+    start: new Date(),
+    end: new Date(),
+    creator: "It's me.",
+    status: con.status.failed,
+    log: "Finished!"
+  }
+];

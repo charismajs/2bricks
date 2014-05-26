@@ -1,20 +1,25 @@
 angular.module('app').controller('mvInfoNewCtrl', function($scope, $modalInstance, mvModelApi) {
 
   $scope.tabName = 'info';
-  $scope.newInfo = {};
+  $scope.newInfo = {arguments:[{}], files:[{}]};
 
-  $scope.showContent = function($fileContent){
-    $scope.content = $fileContent;
+  $scope.showContent = function($fileContent, $fileName, file){
+    console.log('file name : ' + $fileName);
+    file.name = $fileName;
+    file.content = $fileContent;
+  };
+
+  $scope.addArgument = function() {
+    $scope.newInfo.arguments.push([]);
+  };
+
+  $scope.removeArgument = function(index) {
+    $scope.newInfo.arguments.splice(index, 1);
   };
 
   $scope.start = function() {
-    //alert($scope.newInfo.commandName);
-    var data = mvModelApi.Execution.create(
-      {
-        command: $scope.newInfo.commandName,
-        start: new Date()
-      });
-
+    var data = mvModelApi.createExecution($scope.newInfo);
+    console.log('Added new info : ' + $scope.newInfo);
     $modalInstance.close(data);
   };
 

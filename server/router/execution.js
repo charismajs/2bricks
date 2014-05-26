@@ -7,7 +7,7 @@ var con = require('../config/constant'),
 exports.run = function (req, res) {
   var data = req.body;
   Execution.create(data, function(err, execution) {
-    exeCtrl.run(execution.command, function(log){
+    exeCtrl.run(execution, function(log){
       execution.success(log).save(function(err, result) {
         res.send(result);
       });

@@ -14,6 +14,24 @@ TO DO
  * View for Modifing a Hive command
  * Output page with log
 * Excution job history
- 
 
 
+Client DAO
+========
+* Columns
+ * _id - Identifier
+ * Command - To execute a command at shell
+ * Name
+ * Arguments
+  * Name -
+  * Value -
+  * Description -
+ * Comment
+ * Files
+  * Name - 
+  * Value -
+  * Description -
+ * Start
+ * End
+ * Status
+ * Log

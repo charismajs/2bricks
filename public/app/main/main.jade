@@ -15,7 +15,7 @@
           th.w-20 종료일
           th.w-15 작성자
       tbody
-        tr(ng-repeat='exe in executions')
+        tr(ng-repeat='exe in executions | orderBy: "-start"')
           td.clickable(ng-click='popupDetail(exe)') {{ exe.command }}
           td.text-center {{ exe.status }}
           td.text-center {{ exe.start | date:'yyyy-MM-dd HH:mm:ss'}}

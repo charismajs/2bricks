@@ -10,7 +10,11 @@ angular.module('app').directive('onReadFile', function ($parse) {
 
         reader.onload = function (onLoadEvent) {
           scope.$apply(function () {
-            fn(scope, {$fileContent: onLoadEvent.target.result});
+            fn(scope,
+              {
+                $fileContent: onLoadEvent.target.result,
+                $fileName: (onChangeEvent.srcElement || onChangeEvent.target).files[0].name
+              });
           });
         };
 
