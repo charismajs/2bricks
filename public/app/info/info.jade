@@ -44,7 +44,8 @@
               td(colspan='3')
                 textarea.form-control.input-sm {{ execution.comment }}
             tr
-              td(colspan='4') {{ execution.log }}
+              td(colspan='4')
+                textarea.form-control.input-sm(style='height:200px', disabled) {{ execution.log }}
 
         div(ng-switch-when='file')
           table.table(style='margin-top:10px;',ng-repeat='file in execution.files')
