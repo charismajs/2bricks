@@ -1,12 +1,13 @@
 .container
-  .panel.panel-default
+  .panel.panel-primary
     .panel-heading
-      h3 2 Bricks
-      .panel-body Welcome to 2 Bricks!
+      h2 2 Bricks
+      hr
+      .panel-body It's the best tool for shell commands. And easy & simple
 
   .row.help-block
     .col-sm-8
-      button.btn.btn-primary.pull-left(ng-click='popupNew()') New
+      button.btn.green.pull-left(ng-click='popupNew()') New
     .col-sm-4
       .input-group
         span.input-group-addon Search
@@ -17,18 +18,18 @@
     table.table
       thead
         tr
+          th.w-15 잡
           th 명령어
           th.w-10 상태
           th.w-20 시작일
           th.w-20 종료일
-          th.w-15 작성자
       tbody
         tr.clickable(ng-repeat='exe in ( executions | orderBy: "-start" | filter : search)', ng-click='popupDetail(exe)', ng-class="{'bg-success': exe.status == 'finish' , 'bg-danger': exe.status == 'failed'}")
+          td.text-center {{ exe.name }}
           td {{ exe.command }}
           td.text-center {{ exe.status }}
           td.text-center {{ exe.start | date:'yyyy-MM-dd HH:mm:ss'}}
           td.text-center {{ exe.end | date:'yyyy-MM-dd HH:mm:ss'}}
-          td.text-center {{ exe.creator }}
 
 
   .model.fade(id='myModel',tabindex='-1',role='dialog')

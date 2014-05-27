@@ -31,16 +31,18 @@
             tr
               th Arguments
               td(colspan='3')
-                .row(ng-repeat='arg in execution.arguments')
-                  .col(style='padding-left:15px')
-                    .row(data-toggle='tooltip', data-placement='top', title="arguments' description in Job")
-                      .col-md-3 Name : {{ arg.name }}
-                      .col-md-6 Value :
-                        input(type='text', ng-model='arg.value')
+                form.form-horizontal
+                  .form-group.row(ng-repeat='arg in execution.arguments')
+                    label.col-md-2.control-label(for='name') Name
+                    .col-md-4
+                      input.form-control(id='name', type='text', placeholder='', disabled, ng-model='arg.name')
+                    label.col-md-2.control-label(for='value') Value
+                    .col-md-4
+                      input.form-control(id='value', type='text', placeholder='', ng-model='arg.value', data-toggle='tooltip', data-placement='top', title='arg.description')
             tr
               th Comment
               td(colspan='3')
-                textarea(rows='5', cols='70') {{ execution.comment }}
+                textarea.form-control.input-sm {{ execution.comment }}
             tr
               td(colspan='4') {{ execution.log }}
 
