@@ -4,8 +4,16 @@
       h3 2 Bricks
       .panel-body Welcome to 2 Bricks!
 
+  .row.help-block
+    .col-sm-8
+      button.btn.btn-primary.pull-left(ng-click='popupNew()') New
+    .col-sm-4
+      .input-group
+        span.input-group-addon Search
+        input.form-control.pull-right(type='search', placeholder='Filter commands', ng-model='search.command')
+
   .panel.panel-success
-    h3.text-center Execution List
+    h3.text-center.text-muted Execution List
     table.table
       thead
         tr
@@ -15,13 +23,12 @@
           th.w-20 종료일
           th.w-15 작성자
       tbody
-        tr(ng-repeat='exe in executions | orderBy: "-start"')
-          td.clickable(ng-click='popupDetail(exe)') {{ exe.command }}
+        tr.clickable(ng-repeat='exe in ( executions | orderBy: "-start" | filter : search)', ng-click='popupDetail(exe)', ng-class="{'bg-success': exe.status == 'finish' , 'bg-danger': exe.status == 'failed'}")
+          td {{ exe.command }}
           td.text-center {{ exe.status }}
           td.text-center {{ exe.start | date:'yyyy-MM-dd HH:mm:ss'}}
           td.text-center {{ exe.end | date:'yyyy-MM-dd HH:mm:ss'}}
           td.text-center {{ exe.creator }}
 
-  button.btn.btn-primary.pull-right(style='margin-right:10px;', ng-click='popupNew()') New
 
   .model.fade(id='myModel',tabindex='-1',role='dialog')

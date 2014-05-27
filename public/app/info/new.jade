@@ -15,27 +15,30 @@
             tr
               th Command
               td(colspan='3')
-                input(type='text', placeholder="Input 'Command' with arguments", ng-model='newInfo.command')
+                input.form-control(type='text', placeholder="Input 'Command' with arguments", ng-model='newInfo.command')
             tr
               th Name
               td(colspan='3')
-                input(type='text', placeholder="Input 'Name'", ng-model='newInfo.name')
+                input.form-control(type='text', placeholder="Input 'Name'", ng-model='newInfo.name')
             tr
               th Arguments
                 button.btn.btn-info.btn-xs(type='button',ng-click='addArgument()')
                   span.glyphicon.glyphicon-plus
               td(colspan='3')
-                .container
-                  div.form-group(ng-repeat='arg in newInfo.arguments')
-                    input.col-md-3.input-sm.inline(type='text', placeholder="Argument's Name", ng-model='arg.name')
-                    input.col-md-4.input-sm.lnline(type='text', placeholder="Argument's Value", ng-model='arg.value')
-                    input.col-md-5.input-sm(type='text', placeholder="Argument's Description", ng-model='arg.description')
+                .form-group(ng-repeat='arg in newInfo.arguments')
+                  .col-sm-3.nopadding
+                    input.input-sm.form-control(type='text', placeholder="name", ng-model='arg.name')
+                  .col-sm-4.nopadding
+                    input.input-sm.form-control(type='text', placeholder="value", ng-model='arg.value')
+                  .col-sm-4.nopadding
+                    input.input-sm.form-control(type='text', placeholder="description", ng-model='arg.description')
+                  .col-sm-1.nopadding
                     button.btn.btn-danger.btn-xs(type='button', ng-hide="$first",ng-click="removeArgument($index)")
                       span.glyphicon.glyphicon-minus
             tr
               th Comment
               td(colspan='3')
-                textarea(rows='5', cols='70', ng-model='newInfo.comment') {{ newInfo.comment }}
+                textarea.form-control(ng-model='newInfo.comment') {{ newInfo.comment }}
         div(ng-switch-when='file')
           table.table(style='margin-top:10px;',ng-repeat='file in newInfo.files')
             tr
