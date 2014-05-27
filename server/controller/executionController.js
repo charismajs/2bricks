@@ -46,6 +46,7 @@ exports.run = function (execution, next) {
 
   var runner = function(command, next , final) {
     child = exec(command, function (error, stdout, stderr) {
+      console.log('complete to execute a command of ' + command);
       if (error !== null) {
         stdout = error;
         console.log('exec error: ' + error);
@@ -67,6 +68,7 @@ exports.run = function (execution, next) {
 
     fs.mkdirSync(dir);
     fs.writeFile(fullfile, execution.files[0].content, function(err) {
+      console.log('created a file for ' + fullfile);
       if (err != null ) {
         console.log(err);
       }
