@@ -65,7 +65,7 @@ exports.run = function (execution, next) {
     var file = execution.files[0].name;
     var fullfile = dir + "/" + file;
 
-    fs.mkdir(dir);
+    fs.mkdirSync(dir);
     fs.writeFile(fullfile, execution.files[0].content, function(err) {
       if (err != null ) {
         console.log(err);
