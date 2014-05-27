@@ -57,4 +57,3 @@ exports.get = function (jobId, next) {
     next(job);
   });
 };
-
