@@ -13,7 +13,8 @@ angular.module('app').controller('mvInfoCtrl',
     };
 
     $scope.start = function () {
-      var data = mvModelApi.createExecution(execution);
+      var newExecution = $scope.execution;
+      var data = mvModelApi.createExecution(newExecution);
       $modalInstance.close(data);
     };
 

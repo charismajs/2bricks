@@ -1,7 +1,5 @@
-var sys = require('sys'),
-  con = require('../config/constant'),
+var con = require('../config/constant'),
   fs = require('fs'),
-  Q = require('q'),
   exec = require('child_process').exec;
 
 var mongoose = require('mongoose'),
@@ -30,7 +28,6 @@ var replaceCommandText = function (job, task) {
 
   return command;
 };
-
 
 
 exports.run = function (execution, next) {
@@ -83,9 +80,8 @@ exports.run = function (execution, next) {
 };
 
 
-
-
 exports.replace = replaceCommandText;
+
 exports.getCommand = function (taskId, next) {
 
   var jobController = require('./jobController');

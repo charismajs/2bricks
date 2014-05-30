@@ -42,25 +42,3 @@ ExecutionSchema.methods.failed = function (log, err, next) {
 };
 
 exports.Schema = ExecutionSchema;
-//exports.defaultValues = [
-//  {
-//    //taskId: 'ls',
-//    command: 'ls -al /home',
-//    arguments: [],
-//    start: new Date(),
-//    end: new Date(),
-//    creator: "It's me.",
-//    status: con.status.start,
-//    log: "Finished!"
-//  },
-//  {
-//    //taskId: 'less',
-//    command: 'less README.md',
-//    arguments: [],
-//    start: new Date(),
-//    end: new Date(),
-//    creator: "It's me.",
-//    status: con.status.failed,
-//    log: "Finished!"
-//  }
-//];

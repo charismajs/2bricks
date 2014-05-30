@@ -18,8 +18,8 @@ angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvEx
       }
     });
 
-    modalInstance.result.then(function (selectedItem) {
-      $scope.executions = $scope.executions.concat(selectedItem);
+    modalInstance.result.then(function (execution) {
+      $scope.executions.push(execution);
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -32,10 +32,10 @@ angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvEx
       controller: 'mvInfoNewCtrl'
     });
 
-    modalInstance.result.then(function(exe) {
-      $scope.executions = $scope.executions.concat(exe);
+    modalInstance.result.then(function(execution) {
+      $scope.executions.push(execution);
     }, function() {
-      $log.info('Modal dismissed at: ' + new Date())
+      $log.info('Modal dismissed at: ' + new Date());
     });
   };
 });

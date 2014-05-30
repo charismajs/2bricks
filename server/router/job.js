@@ -7,16 +7,6 @@ exports.create = baseRouter.create;
 exports.list = baseRouter.list;
 exports.get = baseRouter.get;
 
-//exports.get = function (req, res) {
-//  jobCtrl.get(req.params.name, function (job) {
-//    if (job) {
-//      res.json(job);
-//    }
-//    res.status(404).json({message: con.message.not_found});
-//  })
-//};
-
-
 exports.update = function (req, res) {
   var data = req.body;
   jobCtrl.update(req.params.name, data, function (saved) {

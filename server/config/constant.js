@@ -1,8 +1,8 @@
 module.exports = {
   model: {
-    execution: "execution",
-    task : "task",
-    job : "job"
+    execution: "Execution",
+    task : "Task",
+    job : "Job"
   },
   status: {
     start: "begin",

@@ -24,7 +24,7 @@
           th.w-20 시작일
           th.w-20 종료일
       tbody
-        tr.clickable(ng-repeat='exe in ( executions | orderBy: "-start" | filter : search)', ng-click='popupDetail(exe)', ng-class="{'bg-success': exe.status == 'finish' , 'bg-danger': exe.status == 'failed'}")
+        tr.clickable(ng-repeat='exe in (executions | orderBy: "-start" | filter : search)', ng-click='popupDetail(exe)', ng-class="{'bg-success': exe.status == 'finish' , 'bg-danger': exe.status == 'failed'}")
           td.text-center {{ exe.name }}
           td {{ exe.command }}
           td.text-center {{ exe.status }}
