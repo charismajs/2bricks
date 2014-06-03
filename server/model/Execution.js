@@ -32,13 +32,15 @@ ExecutionSchema.methods.success = function (log) {
   return this;
 };
 
-ExecutionSchema.methods.failed = function (log, err, next) {
+//ExecutionSchema.methods.failed = function (log, err, next) {
+ExecutionSchema.methods.failed = function (log) {
   this.end = new Date();
   this.log = log;
   this.status = con.status.failed;
-  this.error = err;
+//  this.error = err;
 
-  this.save_async(next);
+  return this;
+//  this.save_async(next);
 };
 
 exports.Schema = ExecutionSchema;

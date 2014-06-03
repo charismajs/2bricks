@@ -43,17 +43,18 @@ exports.run = function (execution, next) {
 
   var runner = function(command, next , final) {
     console.log('before, execute a command of ' + command);
-    child = exec(command, function (error, stdout, stderr) {
+    exec(command, function (error, stdout, stderr) {
       console.log('complete to execute a command of ' + command);
       if (error !== null) {
-        stdout = error;
+//        stdout = error;
+//        console.log('stderr : ' + stderr);
         console.log('exec error: ' + error);
       }
 
       if ( final )
         final();
 
-      return next(stdout);
+      return next(error, stdout);
     });
   };
 
