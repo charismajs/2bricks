@@ -67,7 +67,7 @@ exports.run = function (execution, next) {
     fs.mkdirSync(dir);
     fs.writeFile(fullfile, execution.files[0].content, function(err) {
       console.log('created a file for ' + fullfile);
-      fs.chmodSync(fillfile, 755);
+      fs.chmodSync(fullfile, 755);
       if (err != null ) {
         console.log(err);
       }
