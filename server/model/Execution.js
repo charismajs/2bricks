@@ -8,7 +8,7 @@ var ExecutionSchema = mongoose.Schema({
   files : [{name:String, content :String, description:String}],
   start: {type: Date},
   end: Date,
-  status: {type: String, default: "begin"},
+  status: {type: String, default: "init"},
   comment: String,
   log: String
 });
@@ -23,6 +23,13 @@ ExecutionSchema.methods.save_async = function (next) {
         next(doc);
     }
   });
+};
+
+ExecutionSchema.methods.run = function(log) {
+  this.start = new Date();
+  this.log = log;
+  this.status = con.status.start;
+  return this;
 };
 
 ExecutionSchema.methods.success = function (log) {

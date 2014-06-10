@@ -35,19 +35,18 @@ exports.run = function (execution, next) {
   var applyArgs = function(command, arguments) {
     var cmd = command;
     var args = arguments;
-    for (var i=0; i<args.length; i++){
+    for (var i = 0; i < args.length; i++){
       cmd = cmd.replace( args[i].name, args[i].value); // TODO - Replace When Perfect matched by Word
     }
-    return cmd;
-  }
 
-  var runner = function(command, next , final) {
+    return cmd;
+  };
+
+  var runner = function(command, next, final) {
     console.log('before, execute a command of ' + command);
     exec(command, function (error, stdout, stderr) {
       console.log('complete to execute a command of ' + command);
       if (error !== null) {
-//        stdout = error;
-//        console.log('stderr : ' + stderr);
         console.log('exec error: ' + error);
       }
 
@@ -63,24 +62,23 @@ exports.run = function (execution, next) {
   if ( execution.files.length > 0 ) {
     var dir = "/tmp/2bricks_" + require('crypto').randomBytes(10).toString('hex');
     var file = execution.files[0].name;
-    var fullfile = dir + "/" + file;
+    var fullFile = dir + "/" + file;
 
     fs.mkdirSync(dir);
-    fs.writeFile(fullfile, execution.files[0].content, function(err) {
-      console.log('created a file for ' + fullfile);
-      fs.chmodSync(fullfile, 755);
+    fs.writeFile(fullFile, execution.files[0].content, function(err) {
+      console.log('created a file for ' + fullFile);
+      fs.chmodSync(fullFile, 755);
       if (err != null ) {
         console.log(err);
       }
-      cmd = cmd.replace(file, fullfile);
-      runner(cmd, next, function() { fs.unlinkSync(fullfile); fs.rmdirSync(dir);});
+      cmd = cmd.replace(file, fullFile);
+      runner(cmd, next, function() { fs.unlinkSync(fullFile); fs.rmdirSync(dir);});
     });
   }
   else {
     runner(cmd, next);
   }
 };
-
 
 exports.replace = replaceCommandText;
 

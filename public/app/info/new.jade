@@ -13,13 +13,13 @@
         div(ng-switch-when='info')
           table.table(style='margin-top:10px;')
             tr
-              th Command
-              td(colspan='3')
-                input.form-control(type='text', placeholder="Input 'Command' with arguments", ng-model='newInfo.command')
-            tr
               th Name
               td(colspan='3')
                 input.form-control(type='text', placeholder="Input 'Name'", ng-model='newInfo.name')
+            tr
+              th Command
+              td(colspan='3')
+                input.form-control(type='text', placeholder="Input 'Command' with arguments", ng-model='newInfo.command')
             tr
               th Arguments
                 button.btn.btn-info.btn-xs(type='button',ng-click='addArgument()')
@@ -59,5 +59,6 @@
                 input(type='file', on-read-file='showContent($fileContent, $fileName, file)')
 
 .modal-footer
-  button.btn.btn-primary(ng-click="start()") Start
-  button.btn.btn-warning(ng-click='cancel()') Cancel
+  button.btn.btn-success(ng-click='save()', title='Save new execution') Save
+  button.btn.btn-primary(ng-click='run()', title='Run with this execution') Start
+  button.btn.btn-warning(ng-click='close()', title='Close this popup') Close

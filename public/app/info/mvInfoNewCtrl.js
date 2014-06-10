@@ -17,13 +17,20 @@ angular.module('app').controller('mvInfoNewCtrl', function($scope, $modalInstanc
     $scope.newInfo.arguments.splice(index, 1);
   };
 
-  $scope.start = function() {
-    var data = mvModelApi.createExecution($scope.newInfo);
-    console.log('Added new info : ' + $scope.newInfo);
+  $scope.save = function() {
+    var data = mvModelApi.createExecution($scope.newInfo, function(execution) {
+      console.log("created data's id", execution._id);
+      $scope.newInfo.id = execution._id;
+    });
+  };
+
+  $scope.run = function() {
+    var data = mvModelApi.runExecution($scope.newInfo);
+    console.log('Save and run new info : ', $scope.newInfo);
     $modalInstance.close(data);
   };
 
-  $scope.cancel = function() {
-    $modalInstance.dismiss('cancel');
+  $scope.close = function() {
+    $modalInstance.dismiss('close');
   };
 });

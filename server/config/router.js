@@ -37,11 +37,12 @@ module.exports = function (express) {
 
   // EXECUTION
   router.route('/executions')
-    .post(executionRouter.run)
+    .post(executionRouter.create)
     .get(executionRouter.list);
 
   router.route('/executions/:id')
-    .get(executionRouter.get);
+    .get(executionRouter.get)
+    .put(executionRouter.run);
 
 
 

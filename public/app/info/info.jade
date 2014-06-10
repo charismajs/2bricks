@@ -16,13 +16,13 @@
         div(ng-switch-when='info')
           table.table(style='margin-top:10px;')
             tr
-              th Command
-              td(colspan='3') {{ execution.command }}
-            tr
               th Name
               td {{ execution.name }}
               th Status
               td {{ execution.status }}
+            tr
+              th Command
+              td(colspan='3') {{ execution.command }}
             tr
               th Start
               td {{ execution.start | date:'yyyy-MM-dd HH:mm:ss' }}

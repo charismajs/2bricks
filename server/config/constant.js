@@ -5,6 +5,7 @@ module.exports = {
     job : "Job"
   },
   status: {
+    init: "init",
     start: "begin",
     success: "finish",
     failed: "failed"

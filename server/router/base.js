@@ -40,7 +40,25 @@ module.exports = function (modelname) {
           res.json(data);
         }
       });
+    },
+
+    run: function(req, res, next) {
+      var condition = req.params.id ? {_id:req.params.id} : {name:req.params.name};
+      base.get(condition, function (err, data) {
+        if (data == null) {
+          res.status(404).json({message: con.message.not_found});
+        }
+        else {
+          if (next) {
+            next(data);
+          }
+          else {
+            res.json(data);
+          }
+        }
+      });
     }
+
   };
 
   return functions;
