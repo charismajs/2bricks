@@ -18,8 +18,7 @@ angular.module('app').controller('mvInfoCtrl',
       var newExecution = $scope.execution;
       mvModelApi.createExecution(newExecution, function(execution) {
         console.log('-- Saved Execution');
-        $scope.execution._id = execution._id;
-        $scope.execution.status = execution.status;
+        newExecution = execution;
 
         $modalInstance.close(execution);
       });
@@ -32,17 +31,15 @@ angular.module('app').controller('mvInfoCtrl',
       mvModelApi.runExecution($scope.execution, function(data) {
         console.log('run execution info : ', $scope.execution);
         $modalInstance.close(data);
-//        $modalInstance.close(null);
       });
     };
 
     $scope.saveAndRun = function() {
       var newExecution = $scope.execution;
       mvModelApi.createExecution(newExecution, function(execution) {
-        $scope.execution._id = execution._id;
-        $scope.execution.status = execution.status;
+        newExecution = execution;
 
-        mvModelApi.runExecution($scope.execution, function(data) {
+        mvModelApi.runExecution(newExecution, function(data) {
           $modalInstance.close(data);
         });
       });

@@ -21,8 +21,7 @@ angular.module('app').controller('mvInfoNewCtrl', function($scope, $rootScope, $
     mvModelApi.createExecution($scope.newInfo, function(execution) {
       console.log("-- Saved execution");
       console.log("created data's id", execution._id);
-      $scope.newInfo._id = execution._id;
-      $scope.newInfo.status = execution.status;
+      $scope.newInfo = execution;
 
       $modalInstance.close(execution);
     });
@@ -39,8 +38,7 @@ angular.module('app').controller('mvInfoNewCtrl', function($scope, $rootScope, $
     mvModelApi.createExecution($scope.newInfo, function(execution) {
       console.log("-- Saved execution");
       console.log("created data's id", execution._id);
-      $scope.newInfo._id = execution._id;
-      $scope.newInfo.status = execution.status;
+      $scope.newInfo = execution;
 
       console.log('-- Running execution');
       mvModelApi.runExecution($scope.newInfo, function(data) {

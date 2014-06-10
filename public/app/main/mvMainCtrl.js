@@ -19,16 +19,19 @@ angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvEx
     });
 
     modalInstance.result.then(function (execution) {
-      if (execution.status === 'init') {
-        $scope.executions.push(execution);
-      }
-      else {
-        // TODO - Find better solution
-        for (var i = 0; i < $scope.executions.length; i++) {
-          if ($scope.executions[i]._id === execution._id) {
-            $scope.executions[i] = execution;
-          }
+      // TODO - Find better solution
+      var isNew = true;
+
+      for (var i = 0; i < $scope.executions.length; i++) {
+        if ($scope.executions[i]._id === execution._id) {
+          $scope.executions[i] = execution;
+          isNew = false;
+          break;
         }
+      }
+
+      if (isNew) {
+        $scope.executions.push(execution);
       }
     }, function (reason) {
       $log.info('-- Modal dismissed at: ' + new Date() + ' : ' + reason);
