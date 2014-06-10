@@ -12,13 +12,41 @@ angular.module('app').controller('mvInfoCtrl',
       file.content = $fileContent;
     };
 
-    $scope.start = function () {
+    // TODO - Synchronous Logging from STDOUT at Server (execution.log)
+
+    $scope.save = function() {
       var newExecution = $scope.execution;
-      var data = mvModelApi.createExecution(newExecution);
-      $modalInstance.close(data);
+      mvModelApi.createExecution(newExecution, function(execution) {
+        console.log('-- Saved Execution');
+        $scope.execution._id = execution._id;
+        $scope.execution.status = execution.status;
+
+        $modalInstance.close(execution);
+      });
     };
 
-    // TODO - Synchronous Logging from STDOUT at Server (execution.log)
+    $scope.run = function() {
+      console.log('-- Running Execution');
+      console.log('Execution info : ', $scope.execution);
+
+      mvModelApi.runExecution($scope.execution, function(data) {
+        console.log('run execution info : ', $scope.execution);
+        $modalInstance.close(data);
+//        $modalInstance.close(null);
+      });
+    };
+
+    $scope.saveAndRun = function() {
+      var newExecution = $scope.execution;
+      mvModelApi.createExecution(newExecution, function(execution) {
+        $scope.execution._id = execution._id;
+        $scope.execution.status = execution.status;
+
+        mvModelApi.runExecution($scope.execution, function(data) {
+          $modalInstance.close(data);
+        });
+      });
+    };
 
     $scope.stop = function () {
       // TODO - Cancel a executing command
@@ -27,6 +55,6 @@ angular.module('app').controller('mvInfoCtrl',
     };
 
     $scope.close = function () {
-      $modalInstance.dismiss('close');
+      $modalInstance.dismiss('Close');
     };
   });

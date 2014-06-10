@@ -15,9 +15,6 @@ exports.run = function (req, res) {
     execution.run().save();
 
     exeCtrl.run(execution, function(err, log){
-      console.log('Error at run in execution.js : ' + err);
-      console.log('Log at run in execution.js : ' + log);
-
       if (err) {
         execution.failed(err).save(function(err, result) {
           res.send(result);
@@ -31,6 +28,7 @@ exports.run = function (req, res) {
     });
   });
 };
+
 //exports.run = function (req, res) {
 //  var data = req.body;
 //  Execution.create(data, function(err, execution) {

@@ -68,6 +68,7 @@
 
 
 .modal-footer
-  button.btn.btn-primary(ng-click='start()', ng-show="execution.status !== 'begin'") Start
+  button.btn.btn-success(ng-click='saveAndRun()', title='Save new execution') Save & Start
+  button.btn.btn-primary(ng-click='run()', ng-show="execution.status === 'init'", title='Run with this execution') Start
   button.btn.btn-danger(ng-click='stop()', ng-show="execution.status === 'begin'") Stop
   button.btn.btn-warning(ng-click='close()') Close

@@ -1,4 +1,4 @@
-angular.module('app').controller('mvInfoNewCtrl', function($scope, $modalInstance, mvModelApi) {
+angular.module('app').controller('mvInfoNewCtrl', function($scope, $rootScope, $modalInstance, mvModelApi) {
 
   $scope.tabName = 'info';
   $scope.newInfo = {arguments:[{}], files:[{}]};
@@ -18,19 +18,38 @@ angular.module('app').controller('mvInfoNewCtrl', function($scope, $modalInstanc
   };
 
   $scope.save = function() {
-    var data = mvModelApi.createExecution($scope.newInfo, function(execution) {
+    mvModelApi.createExecution($scope.newInfo, function(execution) {
+      console.log("-- Saved execution");
       console.log("created data's id", execution._id);
-      $scope.newInfo.id = execution._id;
+      $scope.newInfo._id = execution._id;
+      $scope.newInfo.status = execution.status;
+
+      $modalInstance.close(execution);
     });
   };
 
   $scope.run = function() {
-    var data = mvModelApi.runExecution($scope.newInfo);
-    console.log('Save and run new info : ', $scope.newInfo);
-    $modalInstance.close(data);
+    console.log('-- Running execution');
+    mvModelApi.runExecution($scope.newInfo, function(data) {
+      $modalInstance.close(data);
+    });
+  };
+
+  $scope.saveAndRun = function() {
+    mvModelApi.createExecution($scope.newInfo, function(execution) {
+      console.log("-- Saved execution");
+      console.log("created data's id", execution._id);
+      $scope.newInfo._id = execution._id;
+      $scope.newInfo.status = execution.status;
+
+      console.log('-- Running execution');
+      mvModelApi.runExecution($scope.newInfo, function(data) {
+        $modalInstance.close(data);
+      });
+    });
   };
 
   $scope.close = function() {
-    $modalInstance.dismiss('close');
+    $modalInstance.dismiss('Close');
   };
 });

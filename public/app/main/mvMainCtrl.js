@@ -19,9 +19,19 @@ angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvEx
     });
 
     modalInstance.result.then(function (execution) {
-      $scope.executions.push(execution);
-    }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
+      if (execution.status === 'init') {
+        $scope.executions.push(execution);
+      }
+      else {
+        // TODO - Find better solution
+        for (var i = 0; i < $scope.executions.length; i++) {
+          if ($scope.executions[i]._id === execution._id) {
+            $scope.executions[i] = execution;
+          }
+        }
+      }
+    }, function (reason) {
+      $log.info('-- Modal dismissed at: ' + new Date() + ' : ' + reason);
     });
 
   };
@@ -34,8 +44,8 @@ angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvEx
 
     modalInstance.result.then(function(execution) {
       $scope.executions.push(execution);
-    }, function() {
-      $log.info('Modal dismissed at: ' + new Date());
+    }, function(reason) {
+      $log.info('-- Modal dismissed at: ' + new Date() + ' : ' + reason);
     });
   };
 });

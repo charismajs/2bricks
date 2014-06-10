@@ -59,6 +59,6 @@
                 input(type='file', on-read-file='showContent($fileContent, $fileName, file)')
 
 .modal-footer
-  button.btn.btn-success(ng-click='save()', title='Save new execution') Save
-  button.btn.btn-primary(ng-click='run()', title='Run with this execution') Start
+  button.btn.btn-success(ng-click='save()', title='Save only') Save
+  button.btn.btn-primary(ng-click='saveAndRun()', title='Save and Run') Save & Start
   button.btn.btn-warning(ng-click='close()', title='Close this popup') Close
