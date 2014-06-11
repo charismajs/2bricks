@@ -2,7 +2,7 @@ angular.module('app').controller('mvInfoCtrl',
   function ($scope, $modalInstance, mvModelApi, execution) {
 
     $scope.tabName = 'info';
-    $scope.execution = execution;
+    $scope.execution = angular.copy(execution);
     $scope.content = '';
     $scope.name = '';
 
@@ -15,11 +15,10 @@ angular.module('app').controller('mvInfoCtrl',
     // TODO - Synchronous Logging from STDOUT at Server (execution.log)
 
     $scope.save = function() {
-      var newExecution = $scope.execution;
+      var newExecution = angular.copy($scope.execution);
       mvModelApi.createExecution(newExecution, function(execution) {
         console.log('-- Saved Execution');
         newExecution = execution;
-
         $modalInstance.close(execution);
       });
     };
@@ -35,10 +34,9 @@ angular.module('app').controller('mvInfoCtrl',
     };
 
     $scope.saveAndRun = function() {
-      var newExecution = $scope.execution;
+      var newExecution = angular.copy($scope.execution);
       mvModelApi.createExecution(newExecution, function(execution) {
         newExecution = execution;
-
         mvModelApi.runExecution(newExecution, function(data) {
           $modalInstance.close(data);
         });
