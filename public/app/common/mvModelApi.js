@@ -1,6 +1,7 @@
 angular.module('app').service('mvModelApi', function(mvJob, mvTask, mvExecution) {
 
   var create = function(execution, next) {
+    console.log('-- Creating Execution', execution);
     var args = execution.arguments;
     var newArgs = [];
 
@@ -21,11 +22,14 @@ angular.module('app').service('mvModelApi', function(mvJob, mvTask, mvExecution)
         files : execution.files,
         start: new Date()
       }, function(exe) {
+        console.log('-- Created execution', exe);
+//        console.log("created execution's id", exe._id);
         next(exe);
       });
   };
 
   var run = function(execution, next) {
+    console.log('-- Running execution', execution);
     mvExecution.run(
       {
         id: execution._id,
@@ -36,6 +40,7 @@ angular.module('app').service('mvModelApi', function(mvJob, mvTask, mvExecution)
         files : execution.files,
         start: new Date()
       }, function(exe) {
+        console.log('-- Run execution', exe);
         next(exe);
       });
   };

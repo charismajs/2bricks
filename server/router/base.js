@@ -14,7 +14,6 @@ module.exports = function (modelname) {
           res.status(400).send({message: err.toString()});
         }
         else {
-          console.log('before next');
           res.json(entity);
         }
       });

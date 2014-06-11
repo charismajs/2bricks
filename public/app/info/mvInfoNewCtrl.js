@@ -4,7 +4,7 @@ angular.module('app').controller('mvInfoNewCtrl', function($scope, $rootScope, $
   $scope.newInfo = {arguments:[{}], files:[{}]};
 
   $scope.showContent = function($fileContent, $fileName, file){
-    console.log('file name : ' + $fileName);
+//    console.log('file name : ' + $fileName);
     file.name = $fileName;
     file.content = $fileContent;
   };
@@ -19,28 +19,15 @@ angular.module('app').controller('mvInfoNewCtrl', function($scope, $rootScope, $
 
   $scope.save = function() {
     mvModelApi.createExecution($scope.newInfo, function(execution) {
-      console.log("-- Saved execution");
-      console.log("created data's id", execution._id);
       $scope.newInfo = execution;
-
       $modalInstance.close(execution);
-    });
-  };
-
-  $scope.run = function() {
-    console.log('-- Running execution');
-    mvModelApi.runExecution($scope.newInfo, function(data) {
-      $modalInstance.close(data);
     });
   };
 
   $scope.saveAndRun = function() {
     mvModelApi.createExecution($scope.newInfo, function(execution) {
-      console.log("-- Saved execution");
-      console.log("created data's id", execution._id);
       $scope.newInfo = execution;
 
-      console.log('-- Running execution');
       mvModelApi.runExecution($scope.newInfo, function(data) {
         $modalInstance.close(data);
       });
