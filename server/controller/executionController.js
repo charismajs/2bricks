@@ -32,6 +32,16 @@ var replaceCommandText = function (job, task) {
   return command;
 };
 
+var socket = '';
+
+var sendLog = function( execution, data) {
+    socket.emit('execution log',
+      {
+        _id: execution._id,
+        log: data
+      });
+  };
+
 exports.run = function (execution, next) {
 
   var applyArgs = function(command, arguments) {
@@ -57,7 +67,10 @@ exports.run = function (execution, next) {
     cp.stdout.on('data', function (data) {
       stdout = stdout.concat(data);
       // TODO - Add emit for Socket.io
-      console.log('stdout: ' + data);
+      //console.log('stdout: ' + data);
+
+      sendLog(execution, data);
+
       execution.setLog(stdout).save();
     });
 

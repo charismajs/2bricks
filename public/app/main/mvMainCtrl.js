@@ -1,7 +1,14 @@
-angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvExecution, $modal, $log) {
+angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvExecution, $modal, $log, mySocket) {
 
   // TODO - Support paging functions for executions
   $scope.executions = mvExecution.query();
+
+  mySocket.on('execution log', function(data) {
+    // TODO - Find a proper execution, then attach log(data[_id])
+    console.log(data);
+  });
+
+  mySocket.emit('new', 'Wow~!');
 
   // TODO - show a model page for detail information
   // There are only one button which is 'start' if it is finished

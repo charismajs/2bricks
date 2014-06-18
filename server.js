@@ -5,8 +5,10 @@ var express = require('express'),
   cookieParser = require('cookie-parser'),
   session = require('express-session'),
   bodyParser = require('body-parser');
-
 var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 app.use(morgan('dev'));
@@ -22,5 +24,15 @@ require('./server/config/mongoose')(config);
 var router = require('./server/config/router')(express);
 app.use('/', router);
 
-app.listen(config.port);
-console.log('Listening on port ' + config.port + '...');
+server.listen(config.port, function() {
+  console.log('Listening on port ' + config.port + '...');
+});
+
+io.on('connection', function(socket) {
+
+  socket.on('request', function(data) {
+    console.log('socket.io:connection-new > ' + data);
+    socket.emit('test', 'read it now!');
+  });
+
+});
