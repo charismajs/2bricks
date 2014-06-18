@@ -21,7 +21,7 @@ exports.run = function (req, res) {
         });
       }
       else {
-        execution.success(log).save(function (err, result) {
+        execution.success().save(function (err, result) {
           res.send(result);
         });
       }

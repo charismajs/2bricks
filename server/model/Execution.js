@@ -25,6 +25,11 @@ ExecutionSchema.methods.save_async = function (next) {
   });
 };
 
+ExecutionSchema.methods.setLog = function(log) {
+  this.log = log;
+  return this;
+};
+
 ExecutionSchema.methods.run = function(log) {
   this.start = new Date();
   this.log = log;
@@ -32,9 +37,8 @@ ExecutionSchema.methods.run = function(log) {
   return this;
 };
 
-ExecutionSchema.methods.success = function (log) {
+ExecutionSchema.methods.success = function () {
   this.end = new Date();
-  this.log = log;
   this.status = con.status.success;
   return this;
 };

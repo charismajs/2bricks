@@ -1,5 +1,6 @@
 var con = require('../config/constant'),
   fs = require('fs'),
+  spawn = require('child_process').spawn,
   exec = require('child_process').exec;
 
 var mongoose = require('mongoose'),
@@ -7,6 +8,8 @@ var mongoose = require('mongoose'),
   Execution = mongoose.model(con.model.execution);
 
 var baseController = require('../controller/baseController')(Execution);
+
+var base_command = "su - hdfs -c";
 
 // Basic Methods
 exports.create = baseController.create;
@@ -29,7 +32,6 @@ var replaceCommandText = function (job, task) {
   return command;
 };
 
-
 exports.run = function (execution, next) {
 
   var applyArgs = function(command, arguments) {
@@ -42,18 +44,32 @@ exports.run = function (execution, next) {
     return cmd;
   };
 
-  var runner = function(command, next, final) {
-//    console.log('before, execute a command of ' + command);
-    exec(command, function (error, stdout, stderr) {
-      console.log('complete to execute a command of ' + command);
-      if (error !== null) {
-        console.log('exec error: ' + error);
-      }
 
-      if ( final )
+  var runner = function(command, next, final) {
+    var hdfs_command = base_command.replace('$command', command);
+    var command_array = base_command.split(/\s/);
+    var args = command_array.splice(1);
+    args.push("'" + command + "'");
+
+    var cp = spawn(command_array[0], args);
+
+    var stdout = '', stderr = '';
+    cp.stdout.on('data', function (data) {
+      stdout = stdout.concat(data);
+      // TODO - Add emit for Socket.io
+      console.log('stdout: ' + data);
+      execution.setLog(stdout).save();
+    });
+
+    cp.stderr.on('data', function (data) {
+      stderr = stderr.concat(data);
+    });
+
+    cp.on('close', function (code) {
+      if (final)
         final();
 
-      return next(error, stdout);
+      next(stderr, stdout);
     });
   };
 
