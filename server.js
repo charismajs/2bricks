@@ -28,11 +28,13 @@ server.listen(config.port, function() {
   console.log('Listening on port ' + config.port + '...');
 });
 
-io.on('connection', function(socket) {
+var exeCtrl = require('./server/controller/executionController');
+io.sockets.on('connection', exeCtrl.respond);
 
-  socket.on('request', function(data) {
-    console.log('socket.io:connection-new > ' + data);
-    socket.emit('test', 'read it now!');
-  });
-
-});
+//io.on('connection', function(socket) {
+//
+//  socket.on('new', function(data) {
+//    console.log('socket.io:connection-new > ' + data);
+//    socket.emit('execution log', 'read it now!');
+//  });
+//});

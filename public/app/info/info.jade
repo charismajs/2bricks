@@ -42,7 +42,7 @@
             tr
               th Comment
               td(colspan='3')
-                textarea.form-control.input-sm {{ execution.comment }}
+                textarea.form-control.input-sm(ng-model='execution.comment') {{ execution.comment }}
             tr
               td(colspan='4')
                 textarea.form-control.input-sm(style='height:200px', disabled) {{ execution.log }}

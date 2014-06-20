@@ -5,10 +5,17 @@ angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvEx
 
   mySocket.on('execution log', function(data) {
     // TODO - Find a proper execution, then attach log(data[_id])
-    console.log(data);
+//    console.log('received data : ', data);
+
+    for (var i = 0; i < $scope.executions.length; i++) {
+      if ($scope.executions[i]._id == data._id) {
+        $scope.executions[i].log += data.log;
+        break;
+      }
+    }
   });
 
-  mySocket.emit('new', 'Wow~!');
+//  mySocket.emit('new', 'Wow~!');
 
   // TODO - show a model page for detail information
   // There are only one button which is 'start' if it is finished

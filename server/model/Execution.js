@@ -6,11 +6,11 @@ var ExecutionSchema = mongoose.Schema({
   name: String,
   arguments : [{name:String, value :String, description:String}],
   files : [{name:String, content :String, description:String}],
-  start: {type: Date},
+  start: Date,
   end: Date,
   status: {type: String, default: "init"},
-  comment: String,
-  log: String
+  comment: {type: String, default : ''},
+  log: {type: String, default: ''}
 });
 
 ExecutionSchema.methods.save_async = function (next) {

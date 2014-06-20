@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
 
 var baseController = require('../controller/baseController')(Execution);
 
-var base_command = "su - hdfs -c";
+//var base_command = "su - hdfs -c";
+var base_command = "sudo su - hdfs -c";
 
 // Basic Methods
 exports.create = baseController.create;
@@ -34,13 +35,18 @@ var replaceCommandText = function (job, task) {
 
 var socket = '';
 
-var sendLog = function( execution, data) {
-    socket.emit('execution log',
-      {
-        _id: execution._id,
-        log: data
-      });
-  };
+var sendLog = function(execution, data) {
+//  console.log('data in sendLog : ', data);
+  socket.emit('execution log',
+    {
+      _id: execution._id,
+      log: data
+    });
+};
+
+exports.respond = function(socket_io) {
+  socket = socket_io;
+};
 
 exports.run = function (execution, next) {
 
@@ -56,7 +62,6 @@ exports.run = function (execution, next) {
 
 
   var runner = function(command, next, final) {
-    var hdfs_command = base_command.replace('$command', command);
     var command_array = base_command.split(/\s/);
     var args = command_array.splice(1);
     args.push("'" + command + "'");
@@ -69,7 +74,7 @@ exports.run = function (execution, next) {
       // TODO - Add emit for Socket.io
       //console.log('stdout: ' + data);
 
-      sendLog(execution, data);
+      sendLog(execution, data.toString('utf-8', 0, data.length));
 
       execution.setLog(stdout).save();
     });
