@@ -9,8 +9,8 @@ var mongoose = require('mongoose'),
 
 var baseController = require('../controller/baseController')(Execution);
 
-//var base_command = "su - hdfs -c";
-var base_command = "sudo su - hdfs -c";
+var base_command = "su - hdfs -c";
+//var base_command = "sudo su - hdfs -c";
 
 // Basic Methods
 exports.create = baseController.create;
