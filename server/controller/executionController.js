@@ -64,7 +64,8 @@ exports.run = function (execution, next) {
   var runner = function(command, next, final) {
     var command_array = base_command.split(/\s/);
     var args = command_array.splice(1);
-    args.push("'" + command + "'");
+    args = args.concat(command.split(/\s/));
+//    args.push("'" + command + "'");
 
     var cp = spawn(command_array[0], args);
 
