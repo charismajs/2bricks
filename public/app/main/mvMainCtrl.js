@@ -15,6 +15,16 @@ angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvEx
     }
   });
 
+  mySocket.on('execution info', function(execution) {
+    console.log('received data : ', execution);
+    for (var i = 0; i < $scope.executions.length; i++) {
+      if ($scope.executions[i]._id == execution._id) {
+        $scope.executions[i] = execution;
+        break;
+      }
+    }
+  });
+
 //  mySocket.emit('new', 'Wow~!');
 
   // TODO - show a model page for detail information

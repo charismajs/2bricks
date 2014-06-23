@@ -18,6 +18,12 @@ angular.module('app').controller('mvInfoCtrl',
       }
     });
 
+    mySocket.on('execution info', function(execution) {
+      if ($scope.execution._id == execution._id) {
+        $scope.execution = execution;
+      }
+    });
+
     $scope.showContent = function($fileContent, $fileName, file){
 //      console.log('file name : ' + $fileName);
       file.name = $fileName;

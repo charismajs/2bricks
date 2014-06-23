@@ -44,9 +44,15 @@ var sendLog = function(execution, data) {
     });
 };
 
+var sendExecution = function(execution) {
+  socket.emit('execution info', execution);
+};
+
 exports.respond = function(socket_io) {
   socket = socket_io;
 };
+
+exports.sendExecution = sendExecution;
 
 exports.run = function (execution, next) {
 

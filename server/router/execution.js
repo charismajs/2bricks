@@ -17,11 +17,13 @@ exports.run = function (req, res) {
     exeCtrl.run(execution, function(err, log){
       if (err) {
         execution.failed(err).save(function(err, result) {
+          exeCtrl.sendExecution(execution);
           res.send(result);
         });
       }
       else {
         execution.success().save(function (err, result) {
+          exeCtrl.sendExecution(execution);
           res.send(result);
         });
       }
