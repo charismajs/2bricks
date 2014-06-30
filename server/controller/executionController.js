@@ -71,7 +71,7 @@ exports.run = function (execution, next) {
     var stdout = '', stderr = '';
     var cmd = base_command + " <<EOF\n" + command + "\nEOF";
     console.log('command : ' + cmd);
-    var cp = spawn('sh', ['-c', cmd], { stdio: 'inherit' });
+    var cp = spawn('sh', ['-c', cmd], {stdio: ['pipe', 'pipe', 'pipe']});
 
     cp.stdout.on('data', function (data) {
       stdout = stdout.concat(data);
