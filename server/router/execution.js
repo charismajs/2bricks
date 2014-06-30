@@ -14,8 +14,8 @@ exports.run = function (req, res) {
   baseRouter.run(req, res, function(execution) {
     execution.run().save();
 
-    exeCtrl.run(execution, function(err, log){
-      if (err) {
+    exeCtrl.run(execution, function(code){
+      if (code != 0) {
         execution.failed(err).save(function(err, result) {
           exeCtrl.sendExecution(execution);
           res.send(result);

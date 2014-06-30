@@ -71,7 +71,7 @@ exports.run = function (execution, next) {
     var stdout = '', stderr = '';
     var cmd = base_command + " <<EOF\n" + command + "\nEOF";
     console.log('command : ' + cmd);
-    var cp = spawn('sh', ['-c', cmd], {stdio: ['pipe', 'pipe', 'pipe']});
+    var cp = spawn('sh', ['-c', cmd]);
 
     cp.stdout.on('data', function (data) {
       stdout = stdout.concat(data);
@@ -86,6 +86,10 @@ exports.run = function (execution, next) {
     cp.stderr.on('data', function (data) {
       console.log('[CP]stderr : ' + data);
       stderr = stderr.concat(data);
+
+      sendLog(execution, data.toString());
+
+      execution.setLog(stdout).save();
     });
 
     cp.on('close', function (code) {
@@ -96,7 +100,7 @@ exports.run = function (execution, next) {
       if (final)
         final();
 
-      next(stderr, stdout);
+      next(code);
     });
   };
 
