@@ -8,9 +8,9 @@ var mongoose = require('mongoose'),
 
 var baseController = require('../controller/baseController')(Execution);
 
-var base_command = "su - hdfs -c";
+//var base_command = "su - hdfs -c";
 //var base_command = "sudo su - hdfs -c";
-//var su_command = "su - hdfs";
+var base_command = "su - hdfs";
 
 // Basic Methods
 exports.create = baseController.create;
@@ -69,14 +69,14 @@ exports.run = function (execution, next) {
 
   var runner = function(command, next, final) {
     var stdout = '', stderr = '';
-    var cmd = base_command + " '" + command + "'";
+    var cmd = base_command + " <<EOF\n" + command + "\nEOF";
     console.log('command : ' + cmd);
     var cp = spawn('sh', ['-c', cmd]);
 
     cp.stdout.on('data', function (data) {
       stdout = stdout.concat(data);
       // TODO - Add emit for Socket.io
-      //console.log('stdout: ' + data);
+//      console.log('[CP]stdout : ' + data);
 
       sendLog(execution, data.toString());
 
@@ -84,12 +84,13 @@ exports.run = function (execution, next) {
     });
 
     cp.stderr.on('data', function (data) {
+      console.log('[CP]stderr : ' + data);
       stderr = stderr.concat(data);
     });
 
     cp.on('close', function (code) {
       if (code != 0) {
-        console.log('process exited with code ' + code);
+        console.log('[CP]process exited with code ' + code);
       }
 
       if (final)
