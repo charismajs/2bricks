@@ -43,9 +43,8 @@ ExecutionSchema.methods.success = function () {
   return this;
 };
 
-ExecutionSchema.methods.failed = function (log) {
+ExecutionSchema.methods.failed = function () {
   this.end = new Date();
-  this.log = log;
   this.status = con.status.failed;
   return this;
 };
