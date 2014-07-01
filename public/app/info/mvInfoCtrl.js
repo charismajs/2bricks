@@ -20,10 +20,10 @@ angular.module('app').controller('mvInfoCtrl',
 
     mySocket.on('execution info', function(execution) {
       if ($scope.execution._id == execution._id) {
-        $scope.execution = execution;
-//        $scope.execution.start = execution.start;
-//        $scope.execution.end = execution.end;
-//        $scope.execution.status = execution.status;
+//        $scope.execution = execution;
+        $scope.execution.start = execution.start;
+        $scope.execution.end = execution.end;
+        $scope.execution.status = execution.status;
       }
     });
 
@@ -32,8 +32,6 @@ angular.module('app').controller('mvInfoCtrl',
       file.name = $fileName;
       file.content = $fileContent;
     };
-
-    // TODO - Synchronous Logging from STDOUT at Server (execution.log)
 
     $scope.run = function() {
       isUpdate = true;

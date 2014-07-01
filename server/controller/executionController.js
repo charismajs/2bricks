@@ -84,7 +84,7 @@ exports.run = function (execution, next) {
     });
 
     cp.stderr.on('data', function (data) {
-      console.log('[CP]stderr : ' + data);
+//      console.log('[CP]stderr : ' + data);
       stderr = stderr.concat(data);
 
       sendLog(execution, data.toString());
