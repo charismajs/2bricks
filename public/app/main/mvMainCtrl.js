@@ -19,7 +19,10 @@ angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvEx
     console.log('received data : ', execution);
     for (var i = 0; i < $scope.executions.length; i++) {
       if ($scope.executions[i]._id == execution._id) {
-        $scope.executions[i] = execution;
+//        $scope.executions[i] = execution;
+        $scope.executions[i].start = execution.start;
+        $scope.executions[i].end = execution.end;
+        $scope.executions[i].status = execution.status;
         break;
       }
     }
