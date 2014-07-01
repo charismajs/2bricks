@@ -15,6 +15,7 @@ exports.run = function (req, res) {
     execution.run().save();
 
     exeCtrl.run(execution, function(code){
+//      console.log('Execution : ', execution);
       if (code != 0) {
         execution.failed().save(function(err, result) {
           exeCtrl.sendExecution(execution);
