@@ -38,7 +38,7 @@ angular.module('app').controller('mvInfoCtrl',
     $scope.run = function() {
       isUpdate = true;
       mvModelApi.runExecution($scope.execution, function(data) {
-        $scope.execution = data;
+//        $scope.execution = data;
       });
     };
 
@@ -47,7 +47,7 @@ angular.module('app').controller('mvInfoCtrl',
       mvModelApi.createExecution($scope.execution, function(execution) {
         $scope.execution = execution;
         mvModelApi.runExecution($scope.execution, function(data) {
-          $scope.execution = data;
+//          $scope.execution = data;
         });
       });
     };
