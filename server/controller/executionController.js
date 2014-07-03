@@ -1,5 +1,6 @@
 var con = require('../config/constant'),
   fs = require('fs'),
+  child_process = require('child_process'),
   spawn = require('child_process').spawn;
 
 var mongoose = require('mongoose'),
@@ -8,8 +9,7 @@ var mongoose = require('mongoose'),
 
 var baseController = require('../controller/baseController')(Execution);
 
-//var base_command = "su - hdfs -c";
-//var base_command = "sudo su - hdfs -c";
+// TODO - It is needed 'sudo' at a test environment
 var base_command = "su - hdfs";
 
 // Basic Methods
@@ -33,15 +33,17 @@ var replaceCommandText = function (job, task) {
   return command;
 };
 
+var subProcesses = {};
 var socket = '';
 
 var sendLog = function(execution, data) {
-//  console.log('data in sendLog : ', data);
-  socket.emit('execution log',
-    {
-      _id: execution._id,
-      log: data
-    });
+  if (socket) {
+    socket.emit('execution log',
+      {
+        _id: execution._id,
+        log: data
+      });
+  }
 };
 
 var sendExecution = function(execution) {
@@ -53,6 +55,8 @@ exports.respond = function(socket_io) {
 };
 
 exports.sendExecution = sendExecution;
+
+
 
 exports.run = function (execution, next) {
 
@@ -66,45 +70,43 @@ exports.run = function (execution, next) {
     return cmd;
   };
 
-
-  var runner = function(command, next, final) {
+  var runner = function(execution, next, final) {
+    var command = applyArgs(execution.executed_command, execution.arguments);
     var stdout = '', stderr = '';
+
     var cmd = base_command + " <<EOF\n" + command + "\nEOF";
-    console.log('command : ' + cmd);
+
     var cp = spawn('sh', ['-c', cmd]);
+    subProcesses[execution._id] = cp;
 
     cp.stdout.on('data', function (data) {
-      stdout = stdout.concat(data);
-      // TODO - Add emit for Socket.io
-//      console.log('[CP]stdout : ' + data);
-
       sendLog(execution, data.toString());
-
-      execution.setLog(stdout).save();
+      execution.append('stdout', data);
     });
 
     cp.stderr.on('data', function (data) {
-//      console.log('[CP]stderr : ' + data);
-      stderr = stderr.concat(data);
-
       sendLog(execution, data.toString());
-
-      execution.setLog(stdout).save();
+      execution.append('stderr', data);
     });
 
     cp.on('close', function (code) {
+
+      execution.exit_code = code;
+
       if (code != 0) {
-        console.log('[CP]process exited with code ' + code);
+        execution.failed();
+      }
+      else {
+        execution.success();
       }
 
-      if (final)
-        final();
+      if (final) final();
 
-      next(code);
+      delete subProcesses[execution._id];
+      next(execution);
     });
   };
 
-  var cmd = applyArgs(execution.command, execution.arguments);
 
   if ( execution.files.length > 0 ) {
     var dir = "/tmp/2bricks_" + require('crypto').randomBytes(10).toString('hex');
@@ -113,17 +115,18 @@ exports.run = function (execution, next) {
 
     fs.mkdirSync(dir);
     fs.writeFile(fullFile, execution.files[0].content, function(err) {
-      console.log('created a file for ' + fullFile);
+      //console.log('created a file for ' + fullFile);
       fs.chmodSync(fullFile, 755);
       if (err != null ) {
         console.log(err);
       }
-      cmd = cmd.replace(file, fullFile);
-      runner(cmd, next, function() { fs.unlinkSync(fullFile); fs.rmdirSync(dir);});
+      execution.executed_command = execution.command.replace(file, fullFile);
+      runner(execution, next, function() { fs.unlinkSync(fullFile); fs.rmdirSync(dir);});
     });
   }
   else {
-    runner(cmd, next);
+    execution.executed_command = execution.command;
+    runner(execution, next);
   }
 };
 

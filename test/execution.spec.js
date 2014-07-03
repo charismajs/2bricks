@@ -1,32 +1,36 @@
 var app = require('./helper/app.js'),
-  mongoose = require('mongoose'),
-  con = require('../server/config/constant'),
-  exeCtrl = require('../server/controller/executionController');
+  Execution = app.db.model(app.const.model.execution),
+  Data = require('./data/data.js'),
+  controller = require('../server/controller/executionController');
 
-describe('CRUD for Executions -', function () {
+describe('execution.test.js - controller', function () {
 
-//  before(function(done) {
-//    if (mongoose.connection.db) {
-//      return done();
-//    }
-//    mongoose.connect(config.db, done);
-//  });
-//
-//  after(function(done){
-//    mongoose.connection.db.dropDatabase(function(){
-//      mongoose.connection.close(done);
-//    });
-//  });
+  it('Replace command string by arguments', function () {
 
-//  it('should return ls command', function (done) {
-//    var expected = "ls -l";
-//    var taskId = "53562e5ead5fe400004ba6e7";
-//    exeCtrl.getCommand(taskId, function (result) {
-//      result.should.equal(expected);
-//      done();
-//    });
-//  });
-//
+  });
+
+  it('Test for a simple command', function (done) {
+    var execution = new Execution(Data.executions);
+    execution.command = 'echo "TEST"';
+    controller.run(execution, function(execution) {
+      execution.stdout.should.equal("TEST\n");
+      execution.stderr.should.is.empty;
+      execution.exit_code.should.equal(0);
+      execution.status.should.equal(app.const.status.success);
+      done();
+    });
+  });
+
+  it('Test a result when failed using a wrong command ', function (done) {
+    var execution = new Execution(Data.exeuctions);
+    execution.command = 'ABCDEFGHIJK';
+    controller.run(execution, function(execution) {
+      execution.stdout.should.is.empty;
+      execution.exit_code.should.not.equal(0); // the execution was failed
+      done();
+    });
+  });
+
 //  it('should return replaced command', function (done) {
 //    var expected = "ls -ale TestFolder"
 //    var taskId = "53562d198d021f7cabb49f97";

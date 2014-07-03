@@ -8,7 +8,8 @@ module.exports = {
     init: "init",
     start: "begin",
     success: "finish",
-    failed: "failed"
+    failed: "failed",
+    killed: "killed"
   },
   message: {
     not_found: 'Key not found in collection',

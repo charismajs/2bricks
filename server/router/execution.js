@@ -12,22 +12,14 @@ exports.get = baseRouter.get;
 
 exports.run = function (req, res) {
   baseRouter.run(req, res, function(execution) {
+
     execution.run().save();
 
-    exeCtrl.run(execution, function(code){
-//      console.log('Execution : ', execution);
-      if (code != 0) {
-        execution.failed().save(function(err, result) {
-          exeCtrl.sendExecution(execution);
-          res.send(result);
-        });
-      }
-      else {
-        execution.success().save(function (err, result) {
-          exeCtrl.sendExecution(execution);
-          res.send(result);
-        });
-      }
+    exeCtrl.run(execution, function (execution) {
+      execution.save(function (err, result) {
+        exeCtrl.sendExecution(execution);
+        res.send(result);
+      });
     });
   });
 };

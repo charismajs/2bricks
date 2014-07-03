@@ -1,28 +1,25 @@
 
-var job = {
-    "name":"ls",
-    "command":"ls -ale $directory",
-    "comments":"file list up",
-    "_id":"535618cee62f69eb82949978",
-    "__v":0,
-    "files":[""],
-    "arguments":[
+module.exports = {
+  exeuctions : [
+    {
+      "_id": "53b20bdf8785ad361f0e6ecb",
+      "command": "echo '123'",
+      "name": "Check with Row Count",
+      "start": "2014-07-01T01:17:42.262Z",
+      "stdout": "",
+      "stderr": "",
+      "comment": "Check with Row Count",
+      "status": "init",
+      "files": [],
+      "arguments": [
         {
-            "name":"$directory",
-            "description":"located folder"
+          "name": "$1",
+          "description": "year",
+          "_id": "53b20bdf8785ad361f0e6ecd"
         }
-    ]
+      ], "__v": 0
+    }
+  ]
 };
 
-var task = {
-    "jobId": "ls",
-    "creator": "It's me.",
-    "_id": "53562d198d021f7cabb49f97",
-    "__v": 0,
-    "arguments":[
-        {
-            "name":"$directory",
-            "value":"TestFolder"
-        }
-    ]
-};
+

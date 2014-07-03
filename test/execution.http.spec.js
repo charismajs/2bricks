@@ -8,16 +8,9 @@ describe('REST API for Execution - ', function() {
   var url = 'http://localhost:3030';
   var tempTaskId = '';
 
-  before(function(done) {
-    // There is a problem if task is not exist..
-    request(url)
-      .get('/tasks')
-      .end(function (err, res) {
-        var tasks = res.body
-        tempTaskId = tasks[0]._id;
-
-        done();
-      });
+  after(function(done) {
+    mongoose.connection.close();
+    done();
   });
 
   it('should return a result of echo command', function (done) {
@@ -34,10 +27,7 @@ describe('REST API for Execution - ', function() {
         var r = res.body;
 
         r.command.should.equal(execution.command);
-        r.status.should.equal('finish');
-        r.should.have.property('end');
-        r.log.should.equal('HELLO WORLD!\n');
-
+        r.status.should.equal('init');
         done();
       });
 
@@ -58,9 +48,8 @@ describe('REST API for Execution - ', function() {
         var r = res.body;
 
         r.command.should.equal(execution.command);
-        r.status.should.equal('finish');
-        r.should.have.property('end');
-        r.log.should.equal('');
+        r.status.should.equal('init');
+        r.stdout.should.equal('');
 
         done();
       });

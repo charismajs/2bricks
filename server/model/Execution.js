@@ -3,14 +3,17 @@ var mongoose = require('mongoose'),
 
 var ExecutionSchema = mongoose.Schema({
   command: String,
+  executed_command: String,
   name: String,
   arguments : [{name:String, value :String, description:String}],
   files : [{name:String, content :String, description:String}],
   start: Date,
   end: Date,
   status: {type: String, default: "init"},
+  exit_code: Number,
   comment: {type: String, default : ''},
-  log: {type: String, default: ''}
+  stderr: {type: String, default: ''}, // err
+  stdout: {type: String, default: ''} // out
 });
 
 ExecutionSchema.methods.save_async = function (next) {
@@ -25,8 +28,8 @@ ExecutionSchema.methods.save_async = function (next) {
   });
 };
 
-ExecutionSchema.methods.setLog = function(log) {
-  this.log = log;
+ExecutionSchema.methods.append = function(name, text) {
+  this[name] = this[name].concat(text);
   return this;
 };
 

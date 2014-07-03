@@ -19,10 +19,8 @@ describe('REST API for tasks - ', function () {
     request(url)
       .get('/jobs/' + job.name)
       .end(function(err, res) {
-        console.log('Job Name : ' + job.name);
         if (res.body._id != null && res.body._id != 'undefined') {
           tempJobId = res.body._id;
-          console.log("Exist Id : " + tempJobId);
         }
         else {
           request(url)
@@ -32,9 +30,6 @@ describe('REST API for tasks - ', function () {
               if (err) {
                 throw err;
               }
-              tempJobId = res.body._id;
-              console.log("Created Id : " + tempJobId);
-              console.log("Created Body Id : " + res.body._id);
             });
         }
 
