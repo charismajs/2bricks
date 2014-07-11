@@ -1,7 +1,8 @@
 var con = require('../config/constant'),
   soc = require('../config/socket'),
   fs = require('fs'),
-  spawn = require('child_process').spawn;
+  cp = require('child_process'),
+  spawn = cp.spawn;
 
 var mongoose = require('mongoose'),
   Task = mongoose.model(con.model.task),
@@ -16,7 +17,7 @@ exports.create = baseController.create;
 exports.get = baseController.get;
 exports.list = baseController.list;
 
-var subProcesses = {};
+var runningExecutions = {};
 
 
 exports.replace= function(command, arguments) {
@@ -33,16 +34,60 @@ exports.replace= function(command, arguments) {
   return cmd;
 };
 
+var psTree = require('ps-tree');
+
+var kill = function (pid, signal, callback) {
+
+  signal = signal || 'SIGKILL';
+  callback = callback || function () {};
+
+  var killTree = true;
+
+//  cp.exec("kill -9 " + processing.pid, function (error, stdout, stderr) {
+//    // console.log('stdout: ' + stdout);
+//    // console.log('stderr: ' + stderr);
+//    // if(error !== null) {
+//    //      console.log('exec error: ' + error);
+//    // }
+//  });
+
+  if (killTree) {
+    psTree(pid, function (err, children) {
+      [pid].concat(
+        children.map(function (p) {
+          return p.PID;
+        })
+      ).forEach(function (tpid) {
+          try {
+            console.log('CP : ' + tpid);
+            process.kill(tpid, signal)
+          }
+          catch (ex) {
+          }
+        });
+      callback();
+    });
+  } else {
+    try {
+      process.kill(pid, signal)
+    }
+    catch (ex) {
+    }
+    callback();
+  }
+};
+
 exports.kill = function(id, next) {
-  console.log('killing - ' + subProcesses[id] );
+  console.log('killing - ' + runningExecutions[id] );
 
-  subProcesses[id].kill('SIGKILL');
-  delete subProcesses[id];
+  var pid = runningExecutions[id].cp.pid;
+  var execution = runningExecutions[id].exe;
+  delete runningExecutions[id];
 
-  exports.get({"_id" : id}, function (err,execution) {
-    execution.kill();
-    next(execution);
-  });
+  execution.kill();
+  console.log('-- killing' + ' : ' + execution.status);
+  kill(pid);
+  next(execution);
 };
 
 exports.run = function (execution, next) {
@@ -53,7 +98,7 @@ exports.run = function (execution, next) {
     var cmd = base_command + " <<EOF\n" + command + "\nEOF";
 
     var cp = spawn('sh', ['-c', cmd]);
-    subProcesses[execution._id] = cp;
+    runningExecutions[execution._id] = { "cp" : cp , "exe" : execution };
 
     cp.stdout.on('data', function (data) {
       soc.sendLog(execution, data.toString());
@@ -67,23 +112,26 @@ exports.run = function (execution, next) {
 
     cp.on('exit', function (code) {
       console.log('parent: ' + process.pid + ' , child: ' + this.pid);
-      process.kill(this.pid);
     });
 
     cp.on('close', function (code) {
 
       execution.exit_code = code;
 
-      if (code != 0) {
-        execution.failed();
-      }
-      else {
+      if (code == 0) {
+        console.log('-- success');
         execution.success();
+      } else if (execution.status != con.status.killed) {
+        console.log('-- failed' + ' : ' + execution.status);
+        execution.failed();
+      } else {
+        // failed
+        console.log('-- killed');
       }
 
       if (final) final();
 
-      delete subProcesses[execution._id];
+      delete runningExecutions[execution._id];
       next(execution);
     });
   };
