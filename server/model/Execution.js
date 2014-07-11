@@ -46,6 +46,12 @@ ExecutionSchema.methods.success = function () {
   return this;
 };
 
+ExecutionSchema.methods.kill = function () {
+  this.end = new Date();
+  this.status = con.status.killed;
+  return this;
+};
+
 ExecutionSchema.methods.failed = function () {
   this.end = new Date();
   this.status = con.status.failed;

@@ -4,7 +4,8 @@ var express = require('express'),
   methodOverride = require('method-override'),
   cookieParser = require('cookie-parser'),
   session = require('express-session'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser'),
+  socket = require('./server/config/socket');
 var app = express();
 var server = require('http').createServer(app);
 
@@ -27,4 +28,5 @@ server.listen(config.port, function() {
   console.log('Listening on port ' + config.port + '...');
 });
 
-require('./server/config/socket')(server);
+socket.init(server);
+

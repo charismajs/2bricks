@@ -1,4 +1,5 @@
 var con = require('../config/constant'),
+  socket = require('../config/socket'),
   mongoose = require('mongoose'),
   Execution = mongoose.model(con.model.execution),
   baseRouter = require('./base')(con.model.execution),
@@ -17,12 +18,24 @@ exports.run = function (req, res) {
 
     exeCtrl.run(execution, function (execution) {
       execution.save(function (err, result) {
-        exeCtrl.sendExecution(execution);
+        socket.sendExecution(result);
         res.send(result);
       });
     });
   });
 };
+
+exports.delete = function (req, res) {
+  var id = req.params.id;
+  exeCtrl.kill(id, function(execution) {
+    execution.save(function (err, result) {
+      socket.sendExecution(result);
+      res.send(result);
+    });
+  });
+};
+
+
 
 
 

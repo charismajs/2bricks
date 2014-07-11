@@ -45,8 +45,20 @@ angular.module('app').service('mvModelApi', function(mvJob, mvTask, mvExecution)
       });
   };
 
+  var kill = function(execution, next) {
+    console.log('-- Killing execution', execution);
+    mvExecution.kill(
+      {
+        id: execution._id
+      }, function(exe) {
+        console.log('-- Run execution', exe);
+        next(exe);
+      });
+  };
+
   return {
     createExecution : create,
-    runExecution : run
+    runExecution : run,
+    killExecution : kill
   };
 });

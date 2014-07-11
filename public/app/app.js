@@ -14,3 +14,13 @@ angular.module('app').config( function( $routeProvider, $locationProvider){
             controller: 'mvMainCtrl'
         });
 });
+
+angular.module('app').filter('getById', function() {
+  return function(items, id) {
+    for (var i=0; i<items.length; i++ ){
+      if (items[i]._id == id)
+      return i;
+    }
+    return null;
+  };
+});

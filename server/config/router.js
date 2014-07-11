@@ -42,6 +42,7 @@ module.exports = function (express) {
 
   router.route('/executions/:id')
     .get(executionRouter.get)
+    .delete(executionRouter.delete)
     .put(executionRouter.run);
 
 

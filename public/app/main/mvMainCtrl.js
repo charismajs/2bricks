@@ -5,18 +5,19 @@ angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvEx
 
   mySocket.on('execution log', function(data) {
     // TODO - Find a proper execution, then attach log(data[_id])
-//    console.log('received data : ', data);
+    console.log('e-log : ', data);
 
     for (var i = 0; i < $scope.executions.length; i++) {
       if ($scope.executions[i]._id == data._id) {
-        $scope.executions[i].log += data.log;
+        $scope.executions[i].stdout += data.log;
+        console.log('log-added: ' + $scope.executions[i].stdout);
         break;
       }
     }
   });
 
   mySocket.on('execution info', function(execution) {
-    console.log('received data : ', execution);
+    console.log('e-info : ', execution);
     for (var i = 0; i < $scope.executions.length; i++) {
       if ($scope.executions[i]._id == execution._id) {
 //        $scope.executions[i] = execution;
@@ -33,15 +34,14 @@ angular.module('app').controller('mvMainCtrl', function ($scope, $resource, mvEx
   // TODO - show a model page for detail information
   // There are only one button which is 'start' if it is finished
   // otherwise, it is 'stop'
-  $scope.popupDetail = function (exe) {
+  $scope.popupDetail = function (execution) {
 
     var modalInstance = $modal.open({
       templateUrl: '/partials/info/info',
       controller: 'mvInfoCtrl',
       resolve: {
-        execution: function () {
-          return exe;
-        }
+        execution: function () { return execution;},
+        executions: function() {return $scope.executions;}
       }
     });
 

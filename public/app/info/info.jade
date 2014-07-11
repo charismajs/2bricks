@@ -45,7 +45,7 @@
                 textarea.form-control.input-sm(ng-model='execution.comment') {{ execution.comment }}
             tr
               td(colspan='4')
-                textarea.form-control.input-sm(style='height:200px', disabled) {{ execution.log }}
+                textarea.form-control.input-sm(style='height:200px', disabled) {{ execution.stdout }}
 
         div(ng-switch-when='file')
           table.table(style='margin-top:10px;',ng-repeat='file in execution.files')
